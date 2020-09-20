@@ -1,4 +1,4 @@
-.PHONY: dirs clean
+.PHONY: dirs clean run ut_main2
 
 all: dirs ut_main ut_main2
 
@@ -13,3 +13,6 @@ dirs:
 
 clean:
 	rm -f bin/*
+
+run:
+	./bin/ut_main

@@ -79,6 +79,9 @@ private:
       bool result = false;
       if(edges[0] + edges[1] > edges[2] && edges[0] + edges[2] > edges[1] && edges[1] + edges[2] > edges[0])
         result = true;
+      if (edges.size()>3){
+        result = false;
+      }
       return result;
   }
 };

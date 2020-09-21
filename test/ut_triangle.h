@@ -42,16 +42,19 @@ TEST(Shapes, triangleInfo){
 TEST(Shapes, notTriangle){
     std::vector<TwoDimensionalCoordinate*> triangleVector;
     triangleVector.push_back(new TwoDimensionalCoordinate(5,0));
-    triangleVector.push_back(new TwoDimensionalCoordinate(0,5));
+    triangleVector.push_back(new TwoDimensionalCoordinate(2,5));
     triangleVector.push_back(new TwoDimensionalCoordinate(5,0));
+    triangleVector.push_back(new TwoDimensionalCoordinate(6,0));
     try{
         Triangle triangle(triangleVector);
     }catch(std::string e){
         ASSERT_EQ("This is not a triangle!", e);
     }
-    triangleVector.pop_back();
-    triangleVector.push_back(new TwoDimensionalCoordinate(1,2));
-    Triangle triangle2(triangleVector);
+    std::vector<TwoDimensionalCoordinate*> triangleVector2;
+    triangleVector2.push_back(new TwoDimensionalCoordinate(2,5));
+    triangleVector2.push_back(new TwoDimensionalCoordinate(5,0));
+    triangleVector2.push_back(new TwoDimensionalCoordinate(6,0));
+    Triangle triangle2(triangleVector2);
     ASSERT_NO_THROW(triangle2);
 
 }

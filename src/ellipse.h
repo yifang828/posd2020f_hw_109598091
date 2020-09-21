@@ -1,4 +1,4 @@
-
+class Shape;
 
 class Ellipse: public Shape {
 public:

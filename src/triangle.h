@@ -1,3 +1,5 @@
+class Shape;
+
 class Triangle: public Shape{
 public:
   Triangle(std::vector<TwoDimensionalCoordinate*> vectors){

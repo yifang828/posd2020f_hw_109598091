@@ -1,4 +1,6 @@
 #include "shape.h"
+#include "two_dimensional_coordinate.h"
+
 class Triangle: public Shape{
 public:
   Triangle(std::vector<TwoDimensionalCoordinate*> vectors){

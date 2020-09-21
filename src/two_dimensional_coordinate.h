@@ -1,3 +1,5 @@
+#ifndef TWO_DIMENSIONAL_COORDINATE_H
+#define TWO_DIMENSIONAL_COORDINATE_H
 class TwoDimensionalCoordinate{
 public:
   TwoDimensionalCoordinate(double x, double y){
@@ -15,3 +17,5 @@ public:
 private:
   double _x, _y;
 };
+
+#endif

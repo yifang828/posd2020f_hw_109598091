@@ -1,5 +1,4 @@
-class Shape;
-
+#include "shape.h"
 class Triangle: public Shape{
 public:
   Triangle(std::vector<TwoDimensionalCoordinate*> vectors){

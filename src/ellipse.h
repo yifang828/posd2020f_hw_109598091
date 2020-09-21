@@ -1,5 +1,4 @@
-class Shape;
-
+#include "shape.h"
 class Ellipse: public Shape {
 public:
   Ellipse(double semiMajorAxes, double semiMinorAxes){

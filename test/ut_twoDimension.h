@@ -1,4 +1,4 @@
-#include "../src/twoDimensionalCoordinate.h"
+#include "../src/two_dimensional_coordinate.h"
 
 TEST(Shapes, GetCoordinate){
     TwoDimensionalCoordinate coordinate(3.56, 4);

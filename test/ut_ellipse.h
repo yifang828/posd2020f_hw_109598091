@@ -8,8 +8,8 @@ TEST(Shapes, EllipseArea){
 TEST(Shapes, EllipsePerimeter){
     Ellipse ellipse1(3.712, 4.000);
     Ellipse ellipse2(5.556, 3.002);
-    ASSERT_NEAR(24.475, ellipse1.perimeter(), 0.001);
-    ASSERT_NEAR(29.078, ellipse2.perimeter(),0.001);
+    ASSERT_NEAR(24.475, ellipse1.perimeter(), 0.01);
+    ASSERT_NEAR(29.078, ellipse2.perimeter(),0.01);
 }
 
 TEST(Shapes, EllipseInfo){

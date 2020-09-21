@@ -48,6 +48,6 @@ private:
   const std::string ellipseErrorMsg = "This is not a ellipse!";
 
   double round(double x, int n) const{
-      return floor(x*pow(10, n)+0.5)/pow(10, 3);
+      return floor(x*pow(10, n))/pow(10, 3);
   }
 };

@@ -1,4 +1,7 @@
+#define _USE_MATH_DEFINES
 #include "shape.h"
+#include <cmath>
+
 class Ellipse: public Shape {
 public:
   Ellipse(double semiMajorAxes, double semiMinorAxes){

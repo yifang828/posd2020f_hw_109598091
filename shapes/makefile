@@ -1,4 +1,4 @@
-.PHONY: dirs clean run ut_main2
+.PHONY: dirs clean ut_main2
 
 all: dirs ut_main2
 
@@ -14,5 +14,5 @@ dirs:
 clean:
 	rm -rf ./bin ./obj
 
-run:
-	./bin/ut_main --gtest_output=xml:output.xml
+# run:
+# 	./bin/ut_main --gtest_output=xml:output.xml

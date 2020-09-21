@@ -1,2 +1,6 @@
 .git-credentials
 .vscode
+bin
+obj
+.vscode
+.git-credentials

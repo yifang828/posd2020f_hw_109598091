@@ -1,3 +1,6 @@
+#ifndef ELLIPSE_H
+#define ELLIPSE_H
+
 #define _USE_MATH_DEFINES
 #include "shape.h"
 #include <cmath>
@@ -39,3 +42,4 @@ private:
       return floor(x*pow(10, n))/pow(10, 3);
   }
 };
+#endif

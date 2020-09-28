@@ -1,3 +1,6 @@
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
+
 #define _USE_MATH_DEFINES
 #include "shape.h"
 #include <string.h>
@@ -35,3 +38,4 @@ private:
       return floor(x*pow(10, n)+0.5)/pow(10, 3);
   }
 };
+#endif

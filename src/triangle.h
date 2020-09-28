@@ -1,3 +1,6 @@
+#ifndef TRIANGLE_H
+#define TRIANGLE_H
+
 #include "shape.h"
 #include "two_dimensional_coordinate.h"
 
@@ -85,3 +88,4 @@ private:
       return result;
   }
 };
+#endif

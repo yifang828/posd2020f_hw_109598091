@@ -1,10 +1,12 @@
 .PHONY: dirs clean ut_main2
 
-all: dirs ut_main2
+TEST: test/ut_rectangle.h test/ut_ellipse.h test/ut_twoDimension.h test/ut_triangle.h test/ut_sort.h
 
-ut_main: test/ut_main.cpp test/ut_rectangle.h src/rectangle.h src/ellipse.h test/ut_ellipse.h
+SRC:  src/rectangle.h src/ellipse.h src/two_dimensional_coordinate.h src/triangle.h src/sort.h
 
-ut_main2: ut_main test/ut_twoDimension.h src/two_dimensional_coordinate.h test/ut_triangle.h src/triangle.h
+all: dirs ut_main
+
+ut_main: test/ut_main.cpp $(SRC) $(TEST)
 	g++ test/ut_main.cpp -o bin/ut_main -lgtest -lpthread
 
 dirs:
@@ -13,6 +15,3 @@ dirs:
 
 clean:
 	rm -rf ./bin ./obj
-
-# run:
-# 	./bin/ut_main --gtest_output=xml:output.xml

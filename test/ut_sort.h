@@ -24,10 +24,34 @@ class SortTest : public ::testing::Test{
     Shape * r22;
     Shape * r34;
 };
+ TEST_F(SortTest, quickSortWithLambdaAsc){
+    std::array<Shape *, 3> shapes = {t345, r22, r34};
+    quickSort(shapes.begin(), shapes.end(), [](Shape * a, Shape * b){return a->area()<b->area();});
+    ASSERT_EQ(4, shapes[0]->area());
+    ASSERT_EQ(6, shapes[1]->area());
+    ASSERT_EQ(12, shapes[2]->area());
+
+    quickSort(shapes.begin(), shapes.end(), [](Shape * a, Shape * b){return a->perimeter()<b->perimeter();});
+    ASSERT_EQ(8, shapes[0]->perimeter());
+    ASSERT_EQ(12, shapes[1]->perimeter());
+    ASSERT_EQ(14, shapes[2]->perimeter());
+ }
+ 
+ TEST_F(SortTest, quickSortWithLambdaDesc){
+    std::array<Shape *, 3> shapes = {t345, r22, r34};
+    quickSort(shapes.begin(), shapes.end(), [](Shape * a, Shape * b){return a->area()>b->area();});
+    ASSERT_EQ(12, shapes[0]->area());
+    ASSERT_EQ(6, shapes[1]->area());
+    ASSERT_EQ(4, shapes[2]->area());
+
+    quickSort(shapes.begin(), shapes.end(), [](Shape * a, Shape * b){return a->perimeter()>b->perimeter();});
+    ASSERT_EQ(14, shapes[0]->perimeter());
+    ASSERT_EQ(12, shapes[1]->perimeter());
+    ASSERT_EQ(8, shapes[2]->perimeter());
+ }
 
  TEST_F(SortTest, quickSortAreaAsc){
     std::array<Shape *, 3> shapes = {t345, r22, r34};
-    int n = sizeof(shapes)/sizeof(shapes[0]);
     quickSort(shapes.begin(), shapes.end(), areaAscendingCompare);
     ASSERT_EQ(4, shapes[0]->area());
     ASSERT_EQ(6, shapes[1]->area());
@@ -36,7 +60,6 @@ class SortTest : public ::testing::Test{
 
  TEST_F(SortTest, quickSortAreaDesc){
     std::array<Shape *, 3> shapes = {t345, r22, r34};
-    int n = sizeof(shapes)/sizeof(shapes[0]);
     quickSort(shapes.begin(), shapes.end(), areaDescendingCompare);
     ASSERT_EQ(12, shapes[0]->area());
     ASSERT_EQ(6, shapes[1]->area());
@@ -45,7 +68,6 @@ class SortTest : public ::testing::Test{
 
  TEST_F(SortTest, quickSortPerimeterAsc){
     std::array<Shape *, 3>shapes = {t345, r22, r34};
-    int n = sizeof(shapes)/sizeof(shapes[0]);
     quickSort(shapes.begin(), shapes.end(), perimeterAscendingCompare);
     ASSERT_EQ(8, shapes[0]->perimeter());
     ASSERT_EQ(12, shapes[1]->perimeter());
@@ -54,7 +76,6 @@ class SortTest : public ::testing::Test{
 
  TEST_F(SortTest, quickSortPerimeterDesc){
     std::array<Shape *, 3> shapes = {t345, r22, r34};
-    int n = sizeof(shapes)/sizeof(shapes[0]);
     quickSort(shapes.begin(), shapes.end(), perimeterDescendingCompare);
     ASSERT_EQ(14, shapes[0]->perimeter());
     ASSERT_EQ(12, shapes[1]->perimeter());
@@ -63,7 +84,6 @@ class SortTest : public ::testing::Test{
 
 TEST_F(SortTest, quickSortWithObjAsc){
     std::array<Shape *, 3>shapes = {t345, r22, r34};
-    int n = sizeof(shapes)/sizeof(shapes[0]);
     AscendingCompare ascCompare("area");
     quickSort(shapes.begin(), shapes.end(), ascCompare);
     ASSERT_EQ(4, shapes[0]->area());
@@ -79,7 +99,6 @@ TEST_F(SortTest, quickSortWithObjAsc){
 
 TEST_F(SortTest, quickSortWithObjDesc){
     std::array<Shape *, 3>shapes = {t345, r22, r34};
-    int n = sizeof(shapes)/sizeof(shapes[0]);
     DescendingCompare desceCompare("area");
     quickSort(shapes.begin(), shapes.end(), desceCompare);
     ASSERT_EQ(12, shapes[0]->area());

@@ -1,23 +1,23 @@
 #include "shape.h"
 
 template <class RandomAccessIterator, class Compare>
-void quickSort(RandomAccessIterator first, RandomAccessIterator last, Compare compare){
-    if (std::distance(first, last)>1){
-        RandomAccessIterator bound = _partition(first, last, compare);
-        quickSort(first, bound, compare);
-        quickSort(bound+1, last, compare);
+void quickSort(RandomAccessIterator begin, RandomAccessIterator end, Compare compare){
+    if (std::distance(begin, end)>1){
+        RandomAccessIterator bound = _partition(begin, end, compare);
+        quickSort(begin, bound, compare);
+        quickSort(bound+1, end, compare);
     }
 };
 template <class RandomAccessIterator, class Compare>
-RandomAccessIterator _partition(RandomAccessIterator first, RandomAccessIterator last, Compare compare){
-    auto pivot = std::prev(last, 1);
-    auto i = first;
-    for (auto j = first; j != pivot; ++j){
-        if (compare(*j, *pivot)){
+RandomAccessIterator _partition(RandomAccessIterator begin, RandomAccessIterator end, Compare compare){
+    auto p = std::prev(end, 1);
+    auto i = begin;
+    for (auto j = begin; j != p; j++){
+        if (compare(*j, *p)){
             std::swap(*i++, *j);
         }
     }
-    std::swap(*i, *pivot);
+    std::swap(*i, *p);
     return i;
 };
 bool areaAscendingCompare(Shape *a, Shape *b) {

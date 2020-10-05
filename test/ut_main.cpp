@@ -4,6 +4,7 @@
 #include "ut_twoDimension.h"
 #include "ut_triangle.h"
 #include "ut_sort.h"
+#include "ut_terminal.h"
 
 int main(int argc, char ** argv)
 {

@@ -3,6 +3,7 @@
 
 #include "shape.h"
 #include "two_dimensional_coordinate.h"
+#include <iomanip>
 
 class Triangle: public Shape{
 public:

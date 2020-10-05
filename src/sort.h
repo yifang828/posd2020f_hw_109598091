@@ -1,3 +1,5 @@
+#ifndef SORT_H
+#define SORT_H
 #include "shape.h"
 
 template <class RandomAccessIterator, class Compare>
@@ -67,3 +69,4 @@ class DescendingCompare{
   private:
     std::string _feature;
 };
+#endif

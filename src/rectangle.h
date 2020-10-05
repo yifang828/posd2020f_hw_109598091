@@ -5,6 +5,7 @@
 #include "shape.h"
 #include <string.h>
 #include <cmath>
+#include <iomanip>
 
 class Rectangle: public Shape {
 public:

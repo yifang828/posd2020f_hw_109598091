@@ -12,7 +12,7 @@ class Terminal {
 public:
     Terminal(std::string input) {
         _input = input;
-       
+        std::cout<< _input<<std::endl;
         _splitByCloseParen = splitInput(_input, ')');
         for(auto x: _splitByCloseParen){
             _splitByOpenParen.push_back(splitInput(x, '('));

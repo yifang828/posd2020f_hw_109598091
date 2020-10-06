@@ -12,8 +12,8 @@ protected:
         successT1 = new Terminal("Rectangle (2, 2) Rectangle (1, 1) area inc");
         successT2 = new Terminal("Ellipse (4, 3) Rectangle (1, 1) Triangle ([0,0], [3,0], [0,4]) area dec");
         
-        validT1 = new Terminal("Rectangle (2, 2) Rectangle (1, 1) Ellipse$%^&(1, 1) area inc");//TODO
-        validT2 = new Terminal("Rectangle (2, 2) Rectangle (1, 1) Ellipse (-1, -1) area inc");//TODO
+        validT1 = new Terminal("Rectangle (2, 2) Rectangle (1, 1) Ellipse$%^&(1, 1) area inc");
+        validT2 = new Terminal("Rectangle (2, 2) Rectangle (1, 1) Ellipse (-1, -1) area inc");
     }
     void TearDown() override{
         delete successT1;

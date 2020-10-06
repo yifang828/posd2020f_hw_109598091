@@ -19,4 +19,4 @@ dirs:
 
 clean:
 	rm -rf ./bin ./obj
-	rm output.txt
+	# rm output.txt

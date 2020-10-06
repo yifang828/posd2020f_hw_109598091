@@ -24,7 +24,8 @@ public:
 
   double perimeter() const{
       double result = 2*M_PI*_semiMinorAxes+4*(_semiMajorAxes-_semiMinorAxes);
-      return round(result, 3);
+      // return round(result, 3);
+      return result;
   }
 
   std::string info() const{

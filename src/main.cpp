@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     ifstream ifile(argv[1]);
     ofstream ofile(argv[2]);
     string txt;
-    string in;
+    string in = " ";
     string result;
     while (getline(ifile, txt))
     {

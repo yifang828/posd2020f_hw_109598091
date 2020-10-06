@@ -40,6 +40,8 @@ TEST_F(TerminalTest, invalidForm){
       FAIL();
       Terminal("area inc");
       FAIL();
+      Terminal("Rectangle(3.7, 4.2)");
+      FAIL();
     }catch(std::string e) {
         ASSERT_EQ("invalid input", e);
     }

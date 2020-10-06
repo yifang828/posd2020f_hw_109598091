@@ -69,9 +69,9 @@ private:
 
     std::vector<Shape * > gen_ShapeV(std::vector<std::vector<std::string>> vectors){
         std::vector<Shape *> _shapeVectors;
-        std::regex rectangleReg("^\\s*Rectangle\\s*$");
-        std::regex triangleReg("^\\s*Triangle\\s*$");
-        std::regex ellipseReg("^\\s*Ellipse\\s*$");
+        std::regex rectangleReg("^\\s*Rectangle\\s+$");
+        std::regex triangleReg("^\\s*Triangle\\s+$");
+        std::regex ellipseReg("^\\s*Ellipse\\s+$");
         std::regex argReg("^\\s*-{0,1}\\d+\\.{0,1}\\d{0,3}\\s*,\\s*-{0,1}\\d+\\.{0,1}\\d{0,3}\\s*$");
         std::smatch m;
         std::ssub_match ssm;

@@ -10,15 +10,6 @@ TEST(Shapes, TrianglePerimeter){
     ASSERT_EQ(14.042, triangle.perimeter());
 }
 
-// TEST(Shapes, calculateEdge){
-//     std::vector<TwoDimensionalCoordinate*> point;
-//     point.push_back(new TwoDimensionalCoordinate(0, 0));
-//     point.push_back(new TwoDimensionalCoordinate(3, 0));
-//     Triangle triangle(point);
-
-//     ASSERT_EQ(3, triangle.calculateEdge(point[0], point[1]));
-// }
-
 TEST(Shapes, triangleArea){
     std::vector<TwoDimensionalCoordinate*> triangleVector;
     triangleVector.push_back(new TwoDimensionalCoordinate(0, 0));

@@ -29,7 +29,7 @@ public:
       roundedlength<<std::fixed<<std::setprecision(3)<<_length;
       std::stringstream roundedwidth;
       roundedwidth<<std::fixed<<std::setprecision(3)<<_width;
-      return "Rectangle (" + roundedlength.str() + ", " + roundedwidth.str() + ")";//到小數點第三位
+      return "Rectangle (" + roundedlength.str() + ", " + roundedwidth.str() + ")";
   }
 
 private:

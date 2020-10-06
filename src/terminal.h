@@ -113,10 +113,10 @@ private:
         return _shapeVectors;
     }
 
-    std::vector<TwoDimensionalCoordinate*> genCoordinateVector(std::string coordinate){//[0,0], [0,3], [4, 0]
+    std::vector<TwoDimensionalCoordinate*> genCoordinateVector(std::string coordinate){
         std::vector<TwoDimensionalCoordinate*> result;
         std::regex cReg("\\s*]\\s*,*");
-        std::string replaced = regex_replace(coordinate, cReg, "");//[0,0[0,3[4, 0
+        std::string replaced = regex_replace(coordinate, cReg, "");
         std::vector<std::string> splitByBracket = splitInput(replaced, '[');
         for(auto x: splitByBracket){
             std::vector<std::string> splitByComma = splitInput(x, ',');

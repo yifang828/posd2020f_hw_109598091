@@ -12,50 +12,49 @@ class Terminal {
 public:
     Terminal(std::string input) {
         _input = input;
-    }
-    std::string showResult(){
-        std::vector<std::vector<std::string>> splitByOpenParen;
-        std::vector<std::string> splitByCloseParen;
-        std::string result;
-        splitByCloseParen = splitInput(_input, ')');
-        for(auto x: splitByCloseParen){
-            splitByOpenParen.push_back(splitInput(x, '('));
+       
+        _splitByCloseParen = splitInput(_input, ')');
+        for(auto x: _splitByCloseParen){
+            _splitByOpenParen.push_back(splitInput(x, '('));
         }
-        std::vector<std::string> featureNOrder = splitByOpenParen.back();
-        splitByOpenParen.pop_back();
-        std::vector<Shape * > shapeV = genShapeV(splitByOpenParen);
-        if(shapeV.size() == 0){
+
+        _featureNOrder = _splitByOpenParen.back();
+        _sortFeature = genSortFeature(_featureNOrder);
+        _splitByOpenParen.pop_back();
+        _shapeV = gen_ShapeV(_splitByOpenParen);
+        if(_shapeV.size() == 0){
             throw (std::string)"invalid input";
         }
+    }
+    std::string showResult(){
+        std::string result;
 
-        std::regex areaIncReg("^\\s*area\\s+inc\\s*$");
-        std::regex areaDecReg("^\\s*area\\s+dec\\s*$");
-        std::regex perimeterIncReg("^\\s*perimeter\\s+inc\\s*$");
-        std::regex perimeterDecReg("^\\s*perimeter\\s+dec\\s*$");
-        std::smatch m;
-        std::ssub_match ssm;
-
-        if(regex_match(featureNOrder[0], m, areaIncReg)){
-            quickSort(shapeV.begin(), shapeV.end(), areaAscendingCompare);
-            result = genResult(shapeV, "area");
-        }else if(regex_match(featureNOrder[0], m, areaDecReg)){
-            quickSort(shapeV.begin(), shapeV.end(), areaDescendingCompare);
-            result = genResult(shapeV, "area");
-        }else if(regex_match(featureNOrder[0], m, perimeterIncReg)){
-            quickSort(shapeV.begin(), shapeV.end(), perimeterAscendingCompare);
-            result = genResult(shapeV, "perimeter");
-        }else if(regex_match(featureNOrder[0], m, perimeterDecReg)){
-            quickSort(shapeV.begin(), shapeV.end(), perimeterDescendingCompare);
-            result = genResult(shapeV, "perimeter");
+        if(_sortFeature == "areaInc"){
+            quickSort(_shapeV.begin(), _shapeV.end(), areaAscendingCompare);
+            result = genResult(_shapeV, "area");
+        }else if(_sortFeature == "areaDec"){
+            quickSort(_shapeV.begin(), _shapeV.end(), areaDescendingCompare);
+            result = genResult(_shapeV, "area");
+        }else if(_sortFeature == "perimeterInc"){
+            quickSort(_shapeV.begin(), _shapeV.end(), perimeterAscendingCompare);
+            result = genResult(_shapeV, "perimeter");
+        }else if(_sortFeature == "perimeterDec"){
+            quickSort(_shapeV.begin(), _shapeV.end(), perimeterDescendingCompare);
+            result = genResult(_shapeV, "perimeter");
         }else{
             throw (std::string)"invalid input";
         }
-
         return result;
     }
 private:
     std::string _input;
-    
+    std::vector<std::vector<std::string>> _splitByOpenParen;
+    std::vector<std::string> _splitByCloseParen;
+    std::vector<Shape * > _shapeV;
+    std::vector<std::string> _featureNOrder;
+    std::string _sortFeature;
+
+
     std::vector<std::string> splitInput(std::string & input, char delimiter){
         std::vector<std::string> v;
         std::string str;
@@ -68,47 +67,51 @@ private:
         return v;
     }
 
-    std::vector<Shape * > genShapeV(std::vector<std::vector<std::string>> vectors){
-        std::vector<Shape *> shapeVectors;
+    std::vector<Shape * > gen_ShapeV(std::vector<std::vector<std::string>> vectors){
+        std::vector<Shape *> _shapeVectors;
         std::regex rectangleReg("^\\s*Rectangle\\s*$");
         std::regex triangleReg("^\\s*Triangle\\s*$");
         std::regex ellipseReg("^\\s*Ellipse\\s*$");
-        std::regex argReg("^\\s*\\d+\\.{0,1}\\d{0,3}\\s*,\\s*\\d+\\.{0,1}\\d{0,3}\\s*$");
+        std::regex argReg("^\\s*-{0,1}\\d+\\.{0,1}\\d{0,3}\\s*,\\s*-{0,1}\\d+\\.{0,1}\\d{0,3}\\s*$");
         std::smatch m;
         std::ssub_match ssm;
 
         for (int i = 0; i < vectors.size(); i++){
             std::string shapeType= vectors[i].front();
-            if(regex_match(shapeType, m, rectangleReg)){
-                std::vector<std::string> v = vectors[i];
-                std::string widthNLength = v.back();
-                if(regex_match(widthNLength, m, argReg)){
-                    std::vector<std::string> splitByComma = splitInput(widthNLength, ',');
-                    Shape * rectangle = new Rectangle(std::stod(splitByComma[0]), std::stod(splitByComma[1]));
-                    shapeVectors.push_back(rectangle);
+            try{
+                if(regex_match(shapeType, m, rectangleReg)){
+                    std::vector<std::string> v = vectors[i];
+                    std::string widthNLength = v.back();
+                    if(regex_match(widthNLength, m, argReg)){
+                        std::vector<std::string> splitByComma = splitInput(widthNLength, ',');
+                        Shape * rectangle = new Rectangle(std::stod(splitByComma[0]), std::stod(splitByComma[1]));
+                        _shapeVectors.push_back(rectangle);
+                    }else{
+                        continue;
+                    }
+                }else if(regex_match(shapeType, m, triangleReg)){
+                    std::vector<std::string> v = vectors[i];
+                    std::string coordinate = v.back();
+                    std::vector<TwoDimensionalCoordinate*> triangleVector = genCoordinateVector(coordinate);
+                    Shape * triangle = new Triangle(triangleVector);
+                    _shapeVectors.push_back(triangle);
+                }else if(regex_match(shapeType, m, ellipseReg)){
+                    std::string widthNLength = vectors[i].back();
+                    if(regex_match(widthNLength, m, argReg)){
+                        std::vector<std::string> splitByComma = splitInput(widthNLength, ',');
+                        Shape * ellipse = new Ellipse(std::stod(splitByComma[0]), std::stod(splitByComma[1]));
+                        _shapeVectors.push_back(ellipse);
+                    }else{
+                        continue;
+                    }
                 }else{
-                    continue;
+                    throw (std::string)"invalid input";
                 }
-            }else if(regex_match(shapeType, m, triangleReg)){
-                std::vector<std::string> v = vectors[i];
-                std::string coordinate = v.back();
-                std::vector<TwoDimensionalCoordinate*> triangleVector = genCoordinateVector(coordinate);
-                Shape * triangle = new Triangle(triangleVector);
-                shapeVectors.push_back(triangle);
-            }else if(regex_match(shapeType, m, ellipseReg)){
-                std::string widthNLength = vectors[i].back();
-                if(regex_match(widthNLength, m, argReg)){
-                    std::vector<std::string> splitByComma = splitInput(widthNLength, ',');
-                    Shape * ellipse = new Ellipse(std::stod(splitByComma[0]), std::stod(splitByComma[1]));
-                    shapeVectors.push_back(ellipse);
-                }else{
-                    continue;
-                }
-            }else{
-                throw (std::string)"invalid input";
+            }catch(std::string e){
+
             }
         }
-        return shapeVectors;
+        return _shapeVectors;
     }
 
     std::vector<TwoDimensionalCoordinate*> genCoordinateVector(std::string coordinate){//[0,0], [0,3], [4, 0]
@@ -120,6 +123,31 @@ private:
             std::vector<std::string> splitByComma = splitInput(x, ',');
             result.push_back(new TwoDimensionalCoordinate(std::stod(splitByComma[0]), std::stod(splitByComma[1])));
         }
+        return result;
+    }
+
+    std::string genSortFeature(std::vector<std::string> featureNOrder){
+        std::string result="";
+
+        std::regex areaIncReg("^\\s*area\\s+inc\\s*$");
+        std::regex areaDecReg("^\\s*area\\s+dec\\s*$");
+        std::regex perimeterIncReg("^\\s*perimeter\\s+inc\\s*$");
+        std::regex perimeterDecReg("^\\s*perimeter\\s+dec\\s*$");
+        std::smatch m;
+        std::ssub_match ssm;
+
+        if(regex_match(featureNOrder[0], m, areaIncReg)){
+            result = "areaInc";
+        }else if(regex_match(featureNOrder[0], m, areaDecReg)){
+            result = "areaDec";
+        }else if(regex_match(featureNOrder[0], m, perimeterIncReg)){
+            result = "perimeterInc";
+        }else if(regex_match(featureNOrder[0], m, perimeterDecReg)){
+            result = "perimeterDec";
+        }else{
+            throw (std::string)"invalid input";
+        }
+
         return result;
     }
 

@@ -1,7 +1,7 @@
 .PHONY: dirs clean ut_main2
 
-# all: dirs ut_main
-all: dirs geo
+all: dirs ut_main
+# all: dirs geo
 
 geo: src/main.cpp $(SRC) $(TEST)
 	g++ src/main.cpp -o bin/geo

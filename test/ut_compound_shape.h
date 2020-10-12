@@ -9,22 +9,13 @@ protected:
     void SetUp()override{
         r34 = new Rectangle("r34",3, 4);
         e22 = new Ellipse("e22",2, 2);
-
-        // shapeV.push_back(r34);
-        // shapeV.push_back(e22);
-        // cs1 = new CompoundShape("cs1", & shapes);
-        // t345 = new Triangle(3, 4, 5);
     }
     void TearDown()override{
         delete r34;
         delete e22;
-        delete cs1;
-        // delete &shapeV;
     }
     Shape * r34;
     Shape * e22;
-    Shape * cs1;
-    // std::vector<Shape*> shapeV;
 };
 
 TEST_F(CompoundShapeTest, AddShapeToCompoundShape){
@@ -46,12 +37,6 @@ TEST_F(CompoundShapeTest, NoShapeInCompoundShape){
     }
 }
 TEST_F(CompoundShapeTest, CompoundShapeDefault){
-    // std::vector<Shape*> shapeV;
-    // shapeV.push_back(r34);
-    // CompoundShape cs("cs", & shapeV);
-    // for(Shape * shapePtr : cs._shape){ 
-    //     ASSERT_EQ("transparent", shapePtr->color());
-    // }
     std::vector<Shape*> shapeV;
     shapeV.push_back(r34);
     Shape * s = new CompoundShape("s", &shapeV);
@@ -125,4 +110,45 @@ TEST_F(CompoundShapeTest, deleteShapeById){
     }catch(std::string e){
         ASSERT_EQ("Expected delete shape but shape not found", e);
     }
+}
+
+TEST_F(CompoundShapeTest, FindInTreeCompoundShape){
+    std::vector<Shape*> shapeInner;
+    shapeInner.push_back(r34);
+    shapeInner.push_back(e22);
+    CompoundShape * inner = new CompoundShape("in", & shapeInner);
+
+    std::vector<Shape*> shapeOutter;
+    std::vector<TwoDimensionalCoordinate*> triangleVector;
+    triangleVector.push_back(new TwoDimensionalCoordinate(0, 0));
+    triangleVector.push_back(new TwoDimensionalCoordinate(3, 0));
+    triangleVector.push_back(new TwoDimensionalCoordinate(0, 4));
+    Triangle triangle("t",triangleVector);
+    
+    shapeOutter.push_back(& triangle);
+    shapeOutter.push_back(inner);
+
+    CompoundShape * outter = new CompoundShape("out", & shapeOutter);
+    ASSERT_EQ("Rectangle (3.000, 4.000)", outter->getShapeById("r34")->info());
+}
+
+TEST_F(CompoundShapeTest, DeleteInTreeCompoundShape){
+    std::vector<Shape*> shapeInner;
+    shapeInner.push_back(r34);
+    shapeInner.push_back(e22);
+    CompoundShape * inner = new CompoundShape("in", & shapeInner);
+
+    std::vector<Shape*> shapeOutter;
+    std::vector<TwoDimensionalCoordinate*> triangleVector;
+    triangleVector.push_back(new TwoDimensionalCoordinate(0, 0));
+    triangleVector.push_back(new TwoDimensionalCoordinate(3, 0));
+    triangleVector.push_back(new TwoDimensionalCoordinate(0, 4));
+    Triangle triangle("t",triangleVector);
+    
+    shapeOutter.push_back(& triangle);
+    shapeOutter.push_back(inner);
+
+    CompoundShape * outter = new CompoundShape("out", & shapeOutter);
+    outter->deleteShapeById("r34");
+    ASSERT_EQ("Compound Shape {Triangle ([0.000, 0.000], [3.000, 0.000], [0.000, 4.000]), Compound Shape {Ellipse (2.000, 2.000)}}", outter->info());
 }

@@ -6,11 +6,7 @@ class CompoundShape : public Shape {
 public:
     CompoundShape(std::string id, std::vector<Shape*>* shapes):Shape(id) {
         _shape = *shapes;
-        for(Shape * shapePtr : _shape){
-            if(shapePtr->color()=="white"){
-                shapePtr->_color="transparent";
-            }
-        }
+        _color = "transparent";
         if(_shape.size()==0){
             throw(std::string) "This is not a compound shape!";
         }

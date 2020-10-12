@@ -46,12 +46,16 @@ TEST_F(CompoundShapeTest, NoShapeInCompoundShape){
     }
 }
 TEST_F(CompoundShapeTest, CompoundShapeDefault){
+    // std::vector<Shape*> shapeV;
+    // shapeV.push_back(r34);
+    // CompoundShape cs("cs", & shapeV);
+    // for(Shape * shapePtr : cs._shape){ 
+    //     ASSERT_EQ("transparent", shapePtr->color());
+    // }
     std::vector<Shape*> shapeV;
     shapeV.push_back(r34);
-    CompoundShape cs("cs", & shapeV);
-    for(Shape * shapePtr : cs._shape){
-        ASSERT_EQ("transparent", shapePtr->color());
-    }
+    Shape * s = new CompoundShape("s", &shapeV);
+    ASSERT_EQ("transparent", s->color());
 }
 
 TEST_F(CompoundShapeTest, CompoundShapeArea){

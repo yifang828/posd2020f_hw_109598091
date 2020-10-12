@@ -8,7 +8,7 @@
 
 class Ellipse: public Shape {
 public:
-  Ellipse(double semiMajorAxes, double semiMinorAxes){
+  Ellipse(std::string id, double semiMajorAxes, double semiMinorAxes):Shape(id){
     if(semiMajorAxes <= 0 || semiMinorAxes <= 0 || semiMajorAxes < semiMinorAxes)
         throw ellipseErrorMsg;
     else{
@@ -16,7 +16,14 @@ public:
         _semiMinorAxes = semiMinorAxes;
     }
   }
-
+  Ellipse(std::string id, double semiMajorAxes, double semiMinorAxes, std::string color):Shape(id, color){
+    if(semiMajorAxes <= 0 || semiMinorAxes <= 0 || semiMajorAxes < semiMinorAxes)
+        throw ellipseErrorMsg;
+    else{
+        _semiMajorAxes = semiMajorAxes;
+        _semiMinorAxes = semiMinorAxes;
+    }
+  }
   double area() const{
       double result = M_PI * _semiMajorAxes * _semiMinorAxes;
       return round(result, 3);

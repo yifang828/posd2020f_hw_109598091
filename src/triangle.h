@@ -7,13 +7,18 @@
 
 class Triangle: public Shape{
 public:
-  Triangle(std::vector<TwoDimensionalCoordinate*> vectors){
+  Triangle(std::string id, std::vector<TwoDimensionalCoordinate*> vectors):Shape(id){
       _vectors = vectors;
       _edges = getEdges(_vectors);
       if(!isTriangle(_edges))
         throw triangleErrMsg;
   }
-
+  Triangle(std::string id, std::vector<TwoDimensionalCoordinate*> vectors, std::string color):Shape(id, color){
+      _vectors = vectors;
+      _edges = getEdges(_vectors);
+      if(!isTriangle(_edges))
+        throw triangleErrMsg;
+  }
   double area() const{
       double s = 0.5*perimeter();
       double a = _edges[0];

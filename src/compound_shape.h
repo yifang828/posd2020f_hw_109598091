@@ -14,7 +14,7 @@ public:
 
     double area() const {
         double result;
-        for(std::vector<Shape *>::const_iterator i = _shape.begin(); i!= _shape.end(); ++i){
+        for(std::vector<Shape *>::const_iterator i = _shape.begin(); i< _shape.end(); ++i){
             result += (*i)->area();
         }
         return result;
@@ -22,7 +22,7 @@ public:
 
     double perimeter() const { 
         double result;
-        for(std::vector<Shape *>::const_iterator i = _shape.begin(); i!= _shape.end(); ++i){
+        for(std::vector<Shape *>::const_iterator i = _shape.begin(); i< _shape.end(); ++i){
             result += (*i)->perimeter();
         }
         return result;

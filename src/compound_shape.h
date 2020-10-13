@@ -62,6 +62,7 @@ public:
     }
     
     Shape* getShapeById(std::string id) {
+        std::cout<<this->info()<<std::endl;
         Shape * result;
         for(std::vector<Shape *>::const_iterator i = _shape.begin(); i < _shape.end(); ++i){
             if((*i)->_color == "transparent"){

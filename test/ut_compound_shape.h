@@ -9,13 +9,16 @@ protected:
     void SetUp()override{
         r34 = new Rectangle("r34",3, 4);
         e22 = new Ellipse("e22",2, 2);
+        r11 = new Rectangle("r11", 1, 1);
     }
     void TearDown()override{
         delete r34;
         delete e22;
+        delete r11;
     }
     Shape * r34;
     Shape * e22;
+    Shape * r11;
 };
 
 TEST_F(CompoundShapeTest, AddShapeToCompoundShape){
@@ -145,7 +148,11 @@ TEST_F(CompoundShapeTest, FindInTreeCompoundShape){
     shapeOutter.push_back(inner);
 
     CompoundShape * outter = new CompoundShape("out", & shapeOutter);
-    ASSERT_EQ("Rectangle (3.000, 4.000)", outter->getShapeById("r34")->info());
+    std::vector<Shape*> shape3;
+    shape3.push_back(r11);
+    shape3.push_back(outter);
+    CompoundShape * cs3 = new CompoundShape("cs3", &shape3);
+    ASSERT_EQ("Rectangle (3.000, 4.000)", cs3->getShapeById("r34")->info());
 }
 
 TEST_F(CompoundShapeTest, DeleteInTreeCompoundShape){

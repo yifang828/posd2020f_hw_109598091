@@ -7,21 +7,17 @@ class Shape{
         virtual std::string info() const = 0;
         virtual ~Shape(){};
 
-        // interface for default color "white".
         Shape(std::string id){
             _id = id;
             _color = "white";
         }
-        // interface for color input by user.
         Shape(std::string id, std::string color){
             _id = id;
             _color = color;
         } 
-        // return id of shape.
         std::string id() const{
             return _id;
         } 
-        // return color of shape.
         std::string color() const{
             return _color;
         } 

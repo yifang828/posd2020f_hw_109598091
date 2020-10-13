@@ -55,27 +55,11 @@ TEST_F(CompoundShapeTest, CompoundShapeArea){
 }
 
 TEST_F(CompoundShapeTest, CompoundShapePerimeter){
-    // std::vector<Shape*> shapeV;
-    // shapeV.push_back(r34);
-    // shapeV.push_back(e22);
-    // CompoundShape cs("cs", & shapeV);
-    // ASSERT_NEAR(26.566, cs.perimeter(),0.01);
-    std::vector<Shape*> shapeInner;
-    shapeInner.push_back(r34);
-    shapeInner.push_back(e22);
-    CompoundShape * inner = new CompoundShape("in", & shapeInner);
-
-    std::vector<Shape*> shapeOutter;
-    std::vector<TwoDimensionalCoordinate*> triangleVector;
-    triangleVector.push_back(new TwoDimensionalCoordinate(0, 0));
-    triangleVector.push_back(new TwoDimensionalCoordinate(3, 0));
-    triangleVector.push_back(new TwoDimensionalCoordinate(0, 4));
-    Triangle triangle("t",triangleVector);
-    shapeOutter.push_back(& triangle);
-    shapeOutter.push_back(inner);
-
-    CompoundShape * outter = new CompoundShape("out", & shapeOutter);
-    ASSERT_NEAR(38.566, outter->perimeter(),0.01);
+    std::vector<Shape*> shapeV;
+    shapeV.push_back(r34);
+    shapeV.push_back(e22);
+    CompoundShape cs("cs", & shapeV);
+    ASSERT_NEAR(26.566, cs.perimeter(),0.01);
 }
 
 TEST_F(CompoundShapeTest, CompoundShapeInfo){

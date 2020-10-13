@@ -21,7 +21,7 @@ public:
     }
 
     double perimeter() const { 
-        double result;
+        double result = 0.0;
         for(std::vector<Shape *>::const_iterator i = _shape.begin(); i< _shape.end(); ++i){
             result += (*i)->perimeter();
         }

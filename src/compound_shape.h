@@ -65,7 +65,7 @@ public:
         Shape * result;
         for(std::vector<Shape *>::const_iterator i = _shape.begin(); i < _shape.end(); ++i){
             std::cout<<"input: "<<id<<"  shpapeId: "<<(*i)->id()<<std::endl;
-            if((*i)->_color == "transparent"){
+            if((*i)->_color == "transparent" && (*i)->id()!=id){
                 result = (*i)->getShapeById(id);
                 return result;
             }else{

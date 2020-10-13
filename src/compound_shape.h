@@ -36,7 +36,7 @@ public:
         try{
             Shape * shapePtr = getShapeById(id);
             for(std::vector<Shape *>::const_iterator i = _shape.begin(); i < _shape.end(); ++i){
-                if((*i)->_color == "transparent"){
+                if((*i)->_color == "transparent" && (*i)->id()!=id){
                     (*i)->deleteShapeById(id);
                 }else{
                     if((*i)->id()==id){

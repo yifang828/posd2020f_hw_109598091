@@ -62,9 +62,9 @@ public:
     }
     
     Shape* getShapeById(std::string id) {
-        std::cout<<this->info()<<std::endl;
         Shape * result;
         for(std::vector<Shape *>::const_iterator i = _shape.begin(); i < _shape.end(); ++i){
+            std::cout<<"input: "<<id<<"  shpapeId: "<<(*i)->id()<<std::endl;
             if((*i)->_color == "transparent"){
                 result = (*i)->getShapeById(id);
                 return result;
@@ -74,6 +74,7 @@ public:
                 }
             }
         }
+        std::cout<<"going to throw"<<std::endl;
         throw(std::string)"Expected get shape but shape not found";
     }
 

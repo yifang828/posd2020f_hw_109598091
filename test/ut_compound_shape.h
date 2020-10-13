@@ -135,7 +135,7 @@ TEST_F(CompoundShapeTest, FindInTreeCompoundShape){
     std::vector<Shape*> shapeInner;
     shapeInner.push_back(r34);
     shapeInner.push_back(e22);
-    CompoundShape * inner = new CompoundShape("in", & shapeInner);
+    Shape * inner = new CompoundShape("in", & shapeInner);
 
     std::vector<Shape*> shapeOutter;
     std::vector<TwoDimensionalCoordinate*> triangleVector;
@@ -147,19 +147,25 @@ TEST_F(CompoundShapeTest, FindInTreeCompoundShape){
     shapeOutter.push_back(& triangle);
     shapeOutter.push_back(inner);
 
-    CompoundShape * outter = new CompoundShape("out", & shapeOutter);
+    Shape * outter = new CompoundShape("out", & shapeOutter);
     std::vector<Shape*> shape3;
     shape3.push_back(r11);
     shape3.push_back(outter);
-    CompoundShape * cs3 = new CompoundShape("cs3", &shape3);
+    Shape * cs3 = new CompoundShape("cs3", &shape3);
     ASSERT_EQ("Rectangle (3.000, 4.000)", cs3->getShapeById("r34")->info());
+    try{
+        cs3->getShapeById("r00");
+        FAIL();
+    }catch (std::string e){
+        ASSERT_EQ("Expected get shape but shape not found", e);
+    }
 }
 
 TEST_F(CompoundShapeTest, DeleteInTreeCompoundShape){
     std::vector<Shape*> shapeInner;
     shapeInner.push_back(r34);
     shapeInner.push_back(e22);
-    CompoundShape * inner = new CompoundShape("in", & shapeInner);
+    Shape * inner = new CompoundShape("in", & shapeInner);
 
     std::vector<Shape*> shapeOutter;
     std::vector<TwoDimensionalCoordinate*> triangleVector;
@@ -171,7 +177,13 @@ TEST_F(CompoundShapeTest, DeleteInTreeCompoundShape){
     shapeOutter.push_back(& triangle);
     shapeOutter.push_back(inner);
 
-    CompoundShape * outter = new CompoundShape("out", & shapeOutter);
+    Shape * outter = new CompoundShape("out", & shapeOutter);
     outter->deleteShapeById("r34");
     ASSERT_EQ("Compound Shape {Triangle ([0.000, 0.000], [3.000, 0.000], [0.000, 4.000]), Compound Shape {Ellipse (2.000, 2.000)}}", outter->info());
+    try{
+        outter->deleteShapeById("r00");
+        FAIL();
+    }catch (std::string e){
+        ASSERT_EQ("Expected delete shape but shape not found", e);
+    }
 }

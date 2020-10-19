@@ -7,7 +7,7 @@ geo: src/main.cpp $(SRC) $(TEST)
 	g++ src/main.cpp -o bin/geo
 
 ut_main: test/ut_main.cpp $(SRC) $(TEST)
-	g++ test/ut_main.cpp -o bin/ut_main -lgtest -lpthread
+	g++ test/ut_main.cpp src/shape.cpp -o bin/ut_main -lgtest -lpthread
 
 TEST: test/ut_rectangle.h test/ut_ellipse.h test/ut_twoDimension.h test/ut_triangle.h test/ut_compound_shape.h
 

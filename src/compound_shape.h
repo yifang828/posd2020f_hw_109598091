@@ -36,12 +36,15 @@ public:
         try{
             Shape * shapePtr = getShapeById(id);
             for(std::vector<Shape *>::const_iterator i = _shape.begin(); i < _shape.end(); ++i){
-                if((*i)->_color == "transparent" && (*i)->id()!=id){
-                    (*i)->deleteShapeById(id);
-                }else{
+                try{
                     if((*i)->id()==id){
                         _shape.erase(i);
                     }
+                    else if( (*i)->id()!=id ){
+                        (*i)->deleteShapeById(id);
+                    }
+                }catch(std::string e){
+                
                 }
             }
         }catch(std::string e){
@@ -64,13 +67,17 @@ public:
     Shape* getShapeById(std::string id) {
         Shape * result;
         for(std::vector<Shape *>::const_iterator i = _shape.begin(); i < _shape.end(); ++i){
-            if((*i)->_color == "transparent" && (*i)->id()!=id){
-                result = (*i)->getShapeById(id);
-                return result;
-            }else{
-                if((*i)->id()==id){
-                    return result = (*i);
+            try{
+                if((*i)->id()!=id){
+                    result = (*i)->getShapeById(id);
+                    return result;
+                }else{
+                    if((*i)->id()==id){
+                        return result = (*i);
+                    }
                 }
+            }catch(std::string e){
+
             }
         }
         throw(std::string)"Expected get shape but shape not found";

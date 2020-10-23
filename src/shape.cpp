@@ -1,4 +1,6 @@
 #include "shape.h"
+#include "iterator.h"
+#include "null_iterator.h"
 
 Shape::Shape(std::string id){
     _id = id;
@@ -22,4 +24,7 @@ void Shape::deleteShapeById(std::string id){
 }
 Shape* Shape::getShapeById(std::string id){
     throw(std::string)"Only compound shape can get shape!";
+}
+Iterator* Shape::createIterator() const{
+    return new NullIterator();
 }

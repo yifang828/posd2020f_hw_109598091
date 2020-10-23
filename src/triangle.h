@@ -54,6 +54,10 @@ public:
       return "Triangle (["+x1.str()+", "+y1.str()+"], ["+x2.str()+", "+y2.str()+"], ["+x3.str()+", "+y3.str()+"])";
   }
 
+  std::string type() const{
+    return "Triangle";
+  }
+
 private:
   std::vector<TwoDimensionalCoordinate*> _vectors;
   std::vector<double> _edges;

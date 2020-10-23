@@ -1,11 +1,14 @@
 #ifndef COMPOUNDSHAPE_H
 #define COMPOUNDSHAPE_H
+#include <list>
 #include "shape.h"
+#include "iterator.h"
+#include "shape_iterator.h"
 
 class CompoundShape : public Shape {
 public:
-    CompoundShape(std::string id, std::vector<Shape*>* shapes):Shape(id) {
-        _shape = *shapes;
+    CompoundShape(std::string id, std::list<Shape*> shapes):Shape(id) {
+        _shape = shapes;
         _color = "transparent";
         if(_shape.size()==0){
             throw(std::string) "This is not a compound shape!";
@@ -14,7 +17,7 @@ public:
 
     double area() const {
         double result;
-        for(std::vector<Shape *>::const_iterator i = _shape.begin(); i< _shape.end(); ++i){
+        for(std::list<Shape *>::const_iterator i = _shape.begin(); i != _shape.end(); ++i){
             result += (*i)->area();
         }
         return result;
@@ -22,7 +25,7 @@ public:
 
     double perimeter() const { 
         double result = 0.0;
-        for(std::vector<Shape *>::const_iterator i = _shape.begin(); i< _shape.end(); ++i){
+        for(std::list<Shape *>::const_iterator i = _shape.begin(); i != _shape.end(); ++i){
             result += (*i)->perimeter();
         }
         return result;
@@ -35,16 +38,16 @@ public:
     void deleteShapeById(std::string id) {
         try{
             Shape * shapePtr = getShapeById(id);
-            for(std::vector<Shape *>::const_iterator i = _shape.begin(); i < _shape.end(); ++i){
+            for(std::list<Shape *>::iterator i = _shape.begin(); i != _shape.end(); ++i){
                 try{
                     if((*i)->id()==id){
                         _shape.erase(i);
+                        break;
                     }
-                    else if( (*i)->id()!=id ){
+                    else if((*i)->id()!=id){
                         (*i)->deleteShapeById(id);
                     }
                 }catch(std::string e){
-                
                 }
             }
         }catch(std::string e){
@@ -54,7 +57,7 @@ public:
 
     std::string info() const {
         std::string result;
-        for(std::vector<Shape *>::const_iterator i = _shape.begin(); i < _shape.end(); ++i){
+        for(std::list<Shape *>::const_iterator i = _shape.begin(); i != _shape.end(); ++i){
             if(i==_shape.begin()){
                 result += (*i) ->info();
             }else{
@@ -64,9 +67,13 @@ public:
         return "Compound Shape {" + result + "}";
     }
     
+    std::string type() const{
+        return "Compound Shape";
+    }
+    
     Shape* getShapeById(std::string id) {
         Shape * result;
-        for(std::vector<Shape *>::const_iterator i = _shape.begin(); i < _shape.end(); ++i){
+        for(std::list<Shape *>::iterator i = _shape.begin(); i != _shape.end(); ++i){
             try{
                 if((*i)->id()!=id){
                     result = (*i)->getShapeById(id);
@@ -82,8 +89,11 @@ public:
         }
         throw(std::string)"Expected get shape but shape not found";
     }
+    Iterator * createIterator() const {
+        return new ShapeIterator<std::list<Shape*>::const_iterator>(_shape.begin(), _shape.end());
+    }
 
-    std::vector<Shape*> _shape;
+    std::list<Shape*> _shape;
 private:
 };
 #endif

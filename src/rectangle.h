@@ -42,6 +42,10 @@ public:
       return "Rectangle (" + roundedlength.str() + ", " + roundedwidth.str() + ")";
   }
 
+  std::string type() const{
+    return "Rectangle";
+  }
+
 private:
     double _length, _width;
     const std::string rectangleErrorMsg = "This is not a rectangle!";

@@ -41,7 +41,10 @@ public:
       semiMnStream<<std::fixed<<std::setprecision(3)<<_semiMinorAxes;
       return "Ellipse ("+ semiMjStream.str() + ", " + semiMnStream.str()+")";
   }
-
+  
+  std::string type() const{
+    return "Ellipse";
+  }
 private:
   double _semiMajorAxes, _semiMinorAxes;
   const std::string ellipseErrorMsg = "This is not an ellipse!";

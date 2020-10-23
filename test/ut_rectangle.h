@@ -28,3 +28,8 @@ TEST(Shapes, NotRectangle){
     }
     ASSERT_NO_THROW(Rectangle("r11",1, 1));
 }
+
+TEST(Shapes, RectangleType){
+    Rectangle rectangle("r", 3, 4);
+    ASSERT_EQ("Rectangle", rectangle.type());
+}

@@ -29,3 +29,8 @@ TEST(Shapes, NotEllipse){
     }
     ASSERT_NO_THROW(Ellipse("e6",1, 1));
 }
+
+TEST(Shapes, EllipseType){
+    Ellipse ellipse("e", 4, 3);
+    ASSERT_EQ("Ellipse", ellipse.type());
+}

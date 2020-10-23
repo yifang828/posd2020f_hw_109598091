@@ -10,90 +10,73 @@ protected:
         r34 = new Rectangle("r34",3, 4);
         e22 = new Ellipse("e22",2, 2);
         r11 = new Rectangle("r11", 1, 1);
+        std::vector<TwoDimensionalCoordinate*> triangleVector;
+        triangleVector.push_back(new TwoDimensionalCoordinate(0, 0));
+        triangleVector.push_back(new TwoDimensionalCoordinate(3, 0));
+        triangleVector.push_back(new TwoDimensionalCoordinate(0, 4));
+        t345 = new Triangle("t345",triangleVector);
+
+        std::list<Shape*> shapesInner;
+        shapesInner.push_back(r34);
+        shapesInner.push_back(e22);
+        inner = new CompoundShape("inner", shapesInner);
+        
+        std::list<Shape*> shapesOuter;
+        shapesOuter.push_back(inner);
+        shapesOuter.push_back(r11);
+        outer = new CompoundShape("outer", shapesOuter);
     }
     void TearDown()override{
         delete r34;
         delete e22;
         delete r11;
+        delete t345;
+        delete inner;
+        delete outer;
     }
     Shape * r34;
     Shape * e22;
     Shape * r11;
+    Shape * t345;
+    Shape * inner;
+    Shape * outer;
 };
 
-TEST_F(CompoundShapeTest, AddShapeToCompoundShape){
-    std::vector<Shape*> shapeV;
-    shapeV.push_back(r34);
-    shapeV.push_back(e22);
-    CompoundShape cs("cs", & shapeV);
-
-    ASSERT_EQ(2, cs._shape.size());
-}
-
 TEST_F(CompoundShapeTest, NoShapeInCompoundShape){
-    std::vector<Shape*> shapeV;
+    std::list<Shape*> shapeV;
     try{
-        CompoundShape cs("cs", & shapeV);
+        CompoundShape cs("cs", shapeV);
         FAIL();
     }catch(std::string e){
         ASSERT_EQ("This is not a compound shape!",e);
     }
 }
+
 TEST_F(CompoundShapeTest, CompoundShapeDefault){
-    std::vector<Shape*> shapeV;
-    shapeV.push_back(r34);
-    Shape * s = new CompoundShape("s", &shapeV);
-    ASSERT_EQ("transparent", s->color());
+    ASSERT_EQ("transparent", inner->color());
 }
 
 TEST_F(CompoundShapeTest, CompoundShapeArea){
-    std::vector<Shape*> shapeV;
-    shapeV.push_back(r34);
-    shapeV.push_back(e22);
-    CompoundShape cs("cs", & shapeV);
-    ASSERT_NEAR(24.566, cs.area(),0.01);
+    ASSERT_NEAR(24.566, inner->area(),0.01);
 }
 
 TEST_F(CompoundShapeTest, CompoundShapePerimeter){
-    std::vector<Shape*> shapeV;
-    shapeV.push_back(r34);
-    shapeV.push_back(e22);
-    CompoundShape cs("cs", & shapeV);
-    ASSERT_NEAR(26.566, cs.perimeter(),0.01);
+    ASSERT_NEAR(26.566, inner->perimeter(),0.01);
 }
 
 TEST_F(CompoundShapeTest, CompoundShapeInfo){
-    std::vector<Shape*> shapeV;
-    shapeV.push_back(r34);
-    shapeV.push_back(e22);
-    CompoundShape cs("cs", & shapeV);
-    ASSERT_EQ("Compound Shape {Rectangle (3.000, 4.000), Ellipse (2.000, 2.000)}", cs.info());
+    ASSERT_EQ("Compound Shape {Rectangle (3.000, 4.000), Ellipse (2.000, 2.000)}", inner->info());
 }
 
 TEST_F(CompoundShapeTest, CompoundShapeAddSape){
-    std::vector<Shape*> shapeV;
-    shapeV.push_back(r34);
-    shapeV.push_back(e22);
-    CompoundShape cs("cs", & shapeV);
-    
-    std::vector<TwoDimensionalCoordinate*> triangleVector;
-    triangleVector.push_back(new TwoDimensionalCoordinate(0, 0));
-    triangleVector.push_back(new TwoDimensionalCoordinate(3, 0));
-    triangleVector.push_back(new TwoDimensionalCoordinate(0, 4));
-    Triangle triangle("t",triangleVector);
-    cs.addShape(&triangle);
-
-    ASSERT_EQ(3, cs._shape.size());
+    inner->addShape(t345);
+    ASSERT_EQ("Compound Shape {Rectangle (3.000, 4.000), Ellipse (2.000, 2.000), Triangle ([0.000, 0.000], [3.000, 0.000], [0.000, 4.000])}", inner->info());
 }
 
 TEST_F(CompoundShapeTest, GetById){
-    std::vector<Shape*> shapeV;
-    shapeV.push_back(r34);
-    shapeV.push_back(e22);
-    CompoundShape cs("cs", & shapeV);
-    ASSERT_EQ("e22", cs.getShapeById("e22")->id());
+    ASSERT_EQ("e22", inner->getShapeById("e22")->id());
     try{
-        cs.getShapeById("r22");
+        inner->getShapeById("r22");
         FAIL();
     }catch(std::string e){
         ASSERT_EQ("Expected get shape but shape not found", e);
@@ -101,14 +84,10 @@ TEST_F(CompoundShapeTest, GetById){
 }
 
 TEST_F(CompoundShapeTest, deleteShapeById){
-    std::vector<Shape*> shapeV;
-    shapeV.push_back(r34);
-    shapeV.push_back(e22);
-    CompoundShape cs("cs", & shapeV);
-    cs.deleteShapeById("e22");
-    ASSERT_EQ(1, cs._shape.size());
+    inner->deleteShapeById("e22");
+    ASSERT_EQ("Compound Shape {Rectangle (3.000, 4.000)}", inner->info());
     try{
-        cs.deleteShapeById("e22");
+        inner->deleteShapeById("e22");
         FAIL();
     }catch(std::string e){
         ASSERT_EQ("Expected delete shape but shape not found", e);
@@ -116,26 +95,10 @@ TEST_F(CompoundShapeTest, deleteShapeById){
 }
 
 TEST_F(CompoundShapeTest, FindInTreeCompoundShape){
-    std::vector<Shape*> shapeInner;
-    shapeInner.push_back(r34);
-    shapeInner.push_back(e22);
-    Shape * inner = new CompoundShape("in", & shapeInner);
-
-    std::vector<Shape*> shapeOutter;
-    std::vector<TwoDimensionalCoordinate*> triangleVector;
-    triangleVector.push_back(new TwoDimensionalCoordinate(0, 0));
-    triangleVector.push_back(new TwoDimensionalCoordinate(3, 0));
-    triangleVector.push_back(new TwoDimensionalCoordinate(0, 4));
-    Triangle triangle("t",triangleVector);
-    
-    shapeOutter.push_back(& triangle);
-    shapeOutter.push_back(inner);
-
-    Shape * outter = new CompoundShape("out", & shapeOutter);
-    std::vector<Shape*> shape3;
-    shape3.push_back(r11);
-    shape3.push_back(outter);
-    Shape * cs3 = new CompoundShape("cs3", &shape3);
+    std::list<Shape*> shape3;
+    shape3.push_back(t345);
+    shape3.push_back(outer);
+    Shape * cs3 = new CompoundShape("cs3", shape3);
     ASSERT_EQ("Rectangle (3.000, 4.000)", cs3->getShapeById("r34")->info());
     try{
         cs3->getShapeById("r00");
@@ -146,28 +109,17 @@ TEST_F(CompoundShapeTest, FindInTreeCompoundShape){
 }
 
 TEST_F(CompoundShapeTest, DeleteInTreeCompoundShape){
-    std::vector<Shape*> shapeInner;
-    shapeInner.push_back(r34);
-    shapeInner.push_back(e22);
-    Shape * inner = new CompoundShape("in", & shapeInner);
-
-    std::vector<Shape*> shapeOutter;
-    std::vector<TwoDimensionalCoordinate*> triangleVector;
-    triangleVector.push_back(new TwoDimensionalCoordinate(0, 0));
-    triangleVector.push_back(new TwoDimensionalCoordinate(3, 0));
-    triangleVector.push_back(new TwoDimensionalCoordinate(0, 4));
-    Triangle triangle("t",triangleVector);
-    
-    shapeOutter.push_back(& triangle);
-    shapeOutter.push_back(inner);
-
-    Shape * outter = new CompoundShape("out", & shapeOutter);
-    outter->deleteShapeById("r34");
-    ASSERT_EQ("Compound Shape {Triangle ([0.000, 0.000], [3.000, 0.000], [0.000, 4.000]), Compound Shape {Ellipse (2.000, 2.000)}}", outter->info());
+    outer->addShape(t345);
+    outer->deleteShapeById("r34");
+    ASSERT_EQ("Compound Shape {Compound Shape {Ellipse (2.000, 2.000)}, Rectangle (1.000, 1.000), Triangle ([0.000, 0.000], [3.000, 0.000], [0.000, 4.000])}", outer->info());
     try{
-        outter->deleteShapeById("r00");
+        outer->deleteShapeById("r00");
         FAIL();
     }catch (std::string e){
         ASSERT_EQ("Expected delete shape but shape not found", e);
     }
+}
+
+TEST_F(CompoundShapeTest, CompoundShapeType){
+    ASSERT_EQ("Compound Shape", inner->type());
 }

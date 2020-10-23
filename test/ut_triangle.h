@@ -49,3 +49,12 @@ TEST(Shapes, notTriangle){
     ASSERT_NO_THROW(triangle2);
 
 }
+
+TEST(Shapes, TriangleType){
+    std::vector<TwoDimensionalCoordinate*> triangleVector2;
+    triangleVector2.push_back(new TwoDimensionalCoordinate(2,5));
+    triangleVector2.push_back(new TwoDimensionalCoordinate(5,0));
+    triangleVector2.push_back(new TwoDimensionalCoordinate(6,0));
+    Triangle triangle("t",triangleVector2);
+    ASSERT_EQ("Triangle", triangle.type());
+}

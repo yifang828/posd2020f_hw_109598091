@@ -4,6 +4,8 @@
 #include "ut_twoDimension.h"
 #include "ut_triangle.h"
 #include "ut_compound_shape.h"
+#include "ut_iterator.h"
+#include "ut_utility.h"
 
 int main(int argc, char ** argv)
 {

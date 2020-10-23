@@ -23,8 +23,8 @@ protected:
         inner = new CompoundShape("inner", shapesInner);
         
         std::list<Shape*> shapesOuter;
-        shapesOuter.push_back(inner);
         shapesOuter.push_back(r11);
+        shapesOuter.push_back(inner);
         outer = new CompoundShape("outer", shapesOuter);
     }
     void TearDown()override{
@@ -60,7 +60,7 @@ TEST_F(UtilityTest, getShapeById){
     }
 }
 
-// TEST_F(UtilityTest, getShapeByIdInTree){
-//     Shape * shape = getShapeById(outer, "e22");
-//     ASSERT_EQ("Ellipse (2.000, 2.000)", shape->info());
-// }
+TEST_F(UtilityTest, getShapeByIdInTree){
+    Shape * shape = getShapeById(outer, "e22");
+    ASSERT_EQ("Ellipse (2.000, 2.000)", shape->info());
+}

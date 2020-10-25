@@ -64,3 +64,38 @@ TEST_F(UtilityTest, getShapeByIdInTree){
     Shape * shape = getShapeById(outer, "e22");
     ASSERT_EQ("Ellipse (2.000, 2.000)", shape->info());
 }
+
+TEST_F(UtilityTest, AreaFilter){
+    std::deque<Shape*> shapes = filterShape(outer, AreaFilter(10,0));
+    ASSERT_EQ(1, shapes.size());
+    std::deque<Shape*>::iterator itr = shapes.begin();
+    ASSERT_EQ("Rectangle (1.000, 1.000)", (*itr)->info());
+}
+
+TEST_F(UtilityTest, OnlyCompoundShapeCanFilt){
+    try{
+        std::deque<Shape*> shapes = filterShape(r34, AreaFilter(10,0));
+        FAIL();
+    }catch(std::string e){
+        ASSERT_EQ("Only compound shape can filter shape!", e);
+    }
+}
+
+TEST_F(UtilityTest, PerimeterFilter){
+    std::deque<Shape*> shapes = filterShape(outer, PerimeterFilter(10,0));
+    ASSERT_EQ(1, shapes.size());
+    std::deque<Shape*> shapes2 = filterShape(outer, PerimeterFilter(20,0));
+    ASSERT_EQ(3, shapes2.size());
+}
+
+TEST_F(UtilityTest, ColorFilter){
+    std::deque<Shape*> shapes = filterShape(outer, ColorFilter("white"));
+    ASSERT_EQ(3, shapes.size());
+}
+
+TEST_F(UtilityTest, TypeFilter){
+    std::deque<Shape*> shapes = filterShape(outer, TypeFilter("Rectangle"));
+    ASSERT_EQ(2, shapes.size());
+    std::deque<Shape*> shapes2 = filterShape(outer, TypeFilter("Compound Shape"));
+    ASSERT_EQ(1, shapes2.size());
+}

@@ -25,42 +25,45 @@ Shape * getShapeById(Shape* shape, std::string id){
     return nullptr;
 }
 
-std::deque<Shape*> _gbResult;
+// std::deque<Shape*> _gbResult;
 template<class Filter>
 std::deque<Shape*> filterShape(Shape* shape, Filter filter){
     Iterator* itr = shape->createIterator();
     if(itr->isDone()){
         throw(std::string)"Only compound shape can filter shape!";
     }
+    std::deque<Shape*> result = {};
     for(itr->first(); !itr->isDone(); itr->next()){
         Shape * s = itr->currentItem();
+        std::deque<Shape*> recurResult;
         if(filter(s)){
-            _gbResult.push_back(s);
+            // _gbResult.push_back(s);
+            result.push_back(s);
         }
         Iterator * innerItr = s->createIterator();
         if(!innerItr->isDone()){
-            return filterShape(s, filter);
-            // filterInnerShape(innerItr, filter, &result);
+            // return filterShape(s, filter);
+            filterInnerShape(innerItr, filter, &result);
         }
     }
-    std::deque<Shape*> result = _gbResult;
-    _gbResult.clear();
+    // std::deque<Shape*> result = _gbResult;
+    // _gbResult.clear();
     return result;
 }
 
-// template<class Filter>
-// void filterInnerShape(Iterator * itr, Filter filter, std::deque<Shape*> *result){
-//     for(itr->first(); !itr->isDone(); itr->next()){
-//         Shape * s = itr->currentItem();
-//         if(filter(s)){
-//             result->push_back(s);
-//         }
-//         Iterator * innerItr = s->createIterator();
-//         if(!innerItr->isDone()){
-//             filterInnerShape(innerItr, filter, result);
-//         }
-//     }
-// }
+template<class Filter>
+void filterInnerShape(Iterator * itr, Filter filter, std::deque<Shape*> *result){
+    for(itr->first(); !itr->isDone(); itr->next()){
+        Shape * s = itr->currentItem();
+        if(filter(s)){
+            result->push_back(s);
+        }
+        Iterator * innerItr = s->createIterator();
+        if(!innerItr->isDone()){
+            filterInnerShape(innerItr, filter, result);
+        }
+    }
+}
 
 class AreaFilter {
 public:

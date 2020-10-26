@@ -17,9 +17,8 @@ class Shape{
         virtual Shape* getShapeById(std::string id); 
         virtual Iterator * createIterator() const;//hw5
         virtual ~Shape(){};
-        std::string _color;
     private:
-        std::string _id;
+        std::string _id, _color;
 };
 
 #endif

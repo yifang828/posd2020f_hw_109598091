@@ -1,101 +1,112 @@
-#include <list>
-#include "../src/shape.h"
-#include "../src/rectangle.h"
-#include "../src/ellipse.h"
-#include "../src/compound_shape.h"
+#include "../src/folder.h"
+#include "../src/app.h"
 #include "../src/utility.h"
 
-class UtilityTest: public::testing::Test{
+using namespace std;
+
+class UtlilityTestSuite: public testing::Test {
 protected:
-    void SetUp()override{
-        r34 = new Rectangle("r34",3, 4);
-        e22 = new Ellipse("e22",2, 2);
-        r11 = new Rectangle("r11", 1, 1);
-        std::vector<TwoDimensionalCoordinate*> triangleVector;
-        triangleVector.push_back(new TwoDimensionalCoordinate(0, 0));
-        triangleVector.push_back(new TwoDimensionalCoordinate(3, 0));
-        triangleVector.push_back(new TwoDimensionalCoordinate(0, 4));
-        t345 = new Triangle("t345",triangleVector);
-        
-        std::list<Shape*> shapesInner;
-        shapesInner.push_back(r34);
-        shapesInner.push_back(e22);
-        inner = new CompoundShape("inner", shapesInner);
-        
-        std::list<Shape*> shapesOuter;
-        shapesOuter.push_back(r11);
-        shapesOuter.push_back(inner);
-        outer = new CompoundShape("outer", shapesOuter);
+    virtual void SetUp() {
+        chrome = new App("1", "chrome", 50.15);
+        facebook = new App("2", "facebook", 30.32);
+        instagram = new App("3", "instagram", 20.21);
+        youtube = new App("4", "youtube", 70.07);
+        ubereat = new App("5", "ubereat", 40.34);
+        line = new App("6", "line", 60.66);
+
+        favorite = new Folder("7", "favorite");
+        common = new Folder("8", "common");//191.28
+        community = new Folder("9", "community");//101
+        trash = new Folder("10", "trash");//0
+
+        favorite->addNode(chrome);
+        favorite->addNode(facebook);
+        favorite->addNode(common);
+        common->addNode(instagram);
+        common->addNode(community);
+        common->addNode(youtube);
+        community->addNode(ubereat);
+        community->addNode(line);
+        community->addNode(trash);
     }
-    void TearDown()override{
-        delete r34;
-        delete e22;
-        delete r11;
-        delete t345;
-        delete inner;
-        delete outer;
-    }
-    Shape * r34;
-    Shape * e22;
-    Shape * r11;
-    Shape * t345;
-    Shape * inner;
-    Shape * outer;
+
+    virtual void TearDown() {}
+
+    Node* chrome;
+    Node* facebook;
+    Node* instagram;
+    Node* youtube;
+    Node* ubereat;
+    Node* line;
+
+    Node* favorite;
+    Node* common;
+    Node* community;
+    Node* trash;
 };
 
-TEST_F(UtilityTest, getShapeById){
-    Shape * shape = getShapeById(inner, "e22");
-    ASSERT_EQ("Ellipse (2.000, 2.000)", shape->info());
-    try{
-        getShapeById(inner, "r00");
+TEST_F(UtlilityTestSuite, exception_for_app_filter_by_size) {
+    try {
+        filterNode(chrome, SizeFilter(100, 1));
         FAIL();
-    }catch(std::string e){
-        ASSERT_EQ("Expected get shape but shape not found", e);
-    }
-    try{
-        getShapeById(r34, "r34");
-        FAIL();
-    }catch(std::string e){
-        ASSERT_EQ("Only compound shape can get shape!", e);
+    }catch(string e) {
+        ASSERT_EQ("Only folder can filter node!", e);
     }
 }
 
-TEST_F(UtilityTest, getShapeByIdInTree){
-    Shape * shape = getShapeById(outer, "e22");
-    ASSERT_EQ("Ellipse (2.000, 2.000)", shape->info());
+TEST_F(UtlilityTestSuite, folder_filter_by_size_between_80_and_50) {
+    deque<Node *> nodes = filterNode(favorite, SizeFilter(80, 50));
+
+    ASSERT_EQ(3, nodes.size());
+    
+    EXPECT_EQ("1", nodes[0]->id());
+    EXPECT_DOUBLE_EQ(50.15, nodes[0]->size());
+
+    EXPECT_EQ("6", nodes[1]->id());
+    EXPECT_DOUBLE_EQ(60.66, nodes[1]->size());
+
+    EXPECT_EQ("4", nodes[2]->id());
+    EXPECT_DOUBLE_EQ(70.07, nodes[2]->size());
 }
 
-TEST_F(UtilityTest, AreaFilter){
-    std::deque<Shape*> shapes = filterShape(outer, AreaFilter(10,0));
-    ASSERT_EQ(1, shapes.size());
-    std::deque<Shape*>::iterator itr = shapes.begin();
-    ASSERT_EQ("Rectangle (1.000, 1.000)", (*itr)->info());
+TEST_F(UtlilityTestSuite, folder_filter_by_size_between_999_and_0) {
+    deque<Node *> nodes = filterNode(favorite, SizeFilter(999, 0));
+
+    ASSERT_EQ(9, nodes.size());
+
+    EXPECT_EQ("1", nodes[0]->id());
+    EXPECT_DOUBLE_EQ(50.15, nodes[0]->size());
+
+    EXPECT_EQ("2", nodes[1]->id());
+    EXPECT_DOUBLE_EQ(30.32, nodes[1]->size());
+
+    EXPECT_EQ("8", nodes[2]->id());
+    EXPECT_DOUBLE_EQ(191.28, nodes[2]->size());
+
+    EXPECT_EQ("3", nodes[3]->id());
+    EXPECT_DOUBLE_EQ(20.21, nodes[3]->size());
+
+    EXPECT_EQ("9", nodes[4]->id());
+    EXPECT_DOUBLE_EQ(101, nodes[4]->size());
+
+    EXPECT_EQ("5", nodes[5]->id());
+    EXPECT_DOUBLE_EQ(40.34, nodes[5]->size());
+
+    EXPECT_EQ("6", nodes[6]->id());
+    EXPECT_DOUBLE_EQ(60.66, nodes[6]->size());
+
+    EXPECT_EQ("10", nodes[7]->id());
+    EXPECT_DOUBLE_EQ(0, nodes[7]->size());
+
+    EXPECT_EQ("4", nodes[8]->id());
+    EXPECT_DOUBLE_EQ(70.07, nodes[8]->size());
 }
 
-TEST_F(UtilityTest, OnlyCompoundShapeCanFilt){
-    try{
-        std::deque<Shape*> shapes = filterShape(r34, AreaFilter(10,0));
-        FAIL();
-    }catch(std::string e){
-        ASSERT_EQ("Only compound shape can filter shape!", e);
-    }
-}
 
-TEST_F(UtilityTest, PerimeterFilter){
-    std::deque<Shape*> shapes = filterShape(outer, PerimeterFilter(10,0));
-    ASSERT_EQ(1, shapes.size());
-    std::deque<Shape*> shapes2 = filterShape(outer, PerimeterFilter(20,0));
-    ASSERT_EQ(3, shapes2.size());
-}
+TEST_F(UtlilityTestSuite, folder_filter_by_size_equal_to_zero) {
+    deque<Node *> nodes = filterNode(favorite, SizeFilter(0, 0));
+    ASSERT_EQ(1, nodes.size());
 
-TEST_F(UtilityTest, ColorFilter){
-    std::deque<Shape*> shapes = filterShape(outer, ColorFilter("white"));
-    ASSERT_EQ(3, shapes.size());
-}
-
-TEST_F(UtilityTest, TypeFilter){
-    std::deque<Shape*> shapes = filterShape(outer, TypeFilter("Rectangle"));
-    ASSERT_EQ(2, shapes.size());
-    std::deque<Shape*> shapes2 = filterShape(outer, TypeFilter("Compound Shape"));
-    ASSERT_EQ(1, shapes2.size());
+    EXPECT_EQ("10", nodes[0]->id());
+    EXPECT_EQ(0, nodes[0]->size());
 }

@@ -1,7 +1,7 @@
 #ifndef NULL_ITERATOR_H
 #define NULL_ITERATOR_H
 
-#include "shape.h"
+#include "node.h"
 #include "iterator.h"
 
 class NullIterator: public Iterator{
@@ -15,7 +15,7 @@ public:
     bool isDone() const {
         return true;
     }
-    Shape * currentItem() const{
+    Node * currentItem() const{
         throw (std::string)"No child member!";
     }
 };

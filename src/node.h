@@ -30,5 +30,7 @@ public:
 private:
     std::string _id, _name;
     double _size=0.0;
+// protected:
+//     std::string _path;
 };
 #endif

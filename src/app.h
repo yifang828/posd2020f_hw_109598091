@@ -19,6 +19,11 @@ public:
     void updatePath(std::string path){
         _path = path;
     }
-};
+    std::string route() const{
+        return _path+"/"+name();
+    } // the "virtual" of this funtion is optional.
 
+private:
+    // std::string _path;
+};
 #endif

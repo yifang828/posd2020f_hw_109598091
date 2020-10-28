@@ -72,11 +72,11 @@ TEST(FolderTest, size) {
 }
 
 TEST(FolderTest, update_path) {
-    // Node* rootFolder = new Folder("0", "rootFolder");
-    // ASSERT_EQ("/rootFolder", rootFolder->route());
+    Node* rootFolder = new Folder("0", "rootFolder");
+    ASSERT_EQ("/rootFolder", rootFolder->route());
 
-    // rootFolder->updatePath("/usr");
-    // EXPECT_EQ("/usr/rootFolder", rootFolder->route());
+    rootFolder->updatePath("/usr");
+    EXPECT_EQ("/usr/rootFolder", rootFolder->route());
 }
 
 TEST_F(FolderTestSuite, size_change_after_add_nodes){
@@ -96,33 +96,33 @@ TEST_F(FolderTestSuite, size_change_after_add_nodes){
 
 TEST_F(FolderTestSuite, route_change_after_add_nodes){
 
-    // ASSERT_EQ("/favorite", favorite->route());
-    // ASSERT_EQ("/chrome", chrome->route());
-    // ASSERT_EQ("/facebook", facebook->route());
-    // ASSERT_EQ("/common", common->route());
+    ASSERT_EQ("/favorite", favorite->route());
+    ASSERT_EQ("/chrome", chrome->route());
+    ASSERT_EQ("/facebook", facebook->route());
+    ASSERT_EQ("/common", common->route());
 
-    // ASSERT_EQ("/instagram", instagram->route());
-    // ASSERT_EQ("/youtube", youtube->route());
-    // ASSERT_EQ("/community", community->route());
+    ASSERT_EQ("/instagram", instagram->route());
+    ASSERT_EQ("/youtube", youtube->route());
+    ASSERT_EQ("/community", community->route());
 
-    // ASSERT_EQ("/ubereat", ubereat->route());
-    // ASSERT_EQ("/line", line->route());
-    // ASSERT_EQ("/trash", trash->route());
+    ASSERT_EQ("/ubereat", ubereat->route());
+    ASSERT_EQ("/line", line->route());
+    ASSERT_EQ("/trash", trash->route());
 
     addNodes();
 
-    // EXPECT_EQ("/favorite", favorite->route());
+    EXPECT_EQ("/favorite", favorite->route());
     EXPECT_EQ("/favorite/chrome", chrome->route());
-    // EXPECT_EQ("/favorite/facebook", facebook->route());
-    // EXPECT_EQ("/favorite/common", common->route());
+    EXPECT_EQ("/favorite/facebook", facebook->route());
+    EXPECT_EQ("/favorite/common", common->route());
 
-    // EXPECT_EQ("/favorite/common/instagram", instagram->route());
-    // EXPECT_EQ("/favorite/common/youtube", youtube->route());
-    // EXPECT_EQ("/favorite/common/community", community->route());
+    EXPECT_EQ("/favorite/common/instagram", instagram->route());
+    EXPECT_EQ("/favorite/common/youtube", youtube->route());
+    EXPECT_EQ("/favorite/common/community", community->route());
 
-    // EXPECT_EQ("/favorite/common/community/ubereat", ubereat->route());
-    // EXPECT_EQ("/favorite/common/community/line", line->route());
-    // EXPECT_EQ("/favorite/common/community/trash", trash->route());
+    EXPECT_EQ("/favorite/common/community/ubereat", ubereat->route());
+    EXPECT_EQ("/favorite/common/community/line", line->route());
+    EXPECT_EQ("/favorite/common/community/trash", trash->route());
 }
 
 TEST_F(FolderTestSuite, get_node){

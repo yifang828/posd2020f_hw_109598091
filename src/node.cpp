@@ -18,7 +18,7 @@ std::string Node::name() const{
 }
 
 std::string Node::route() const{
-    return _path+"/"+_name;
+    // return _path+"/"+_name;
 } // the "virtual" of this funtion is optional.
 
 double Node::size() const{
@@ -26,7 +26,7 @@ double Node::size() const{
 }
 
 void Node::updatePath(std::string path){
-    _path = path;
+    // _path = path;
 }
 
 void Node::addNode(Node* node){

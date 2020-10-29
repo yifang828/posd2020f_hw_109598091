@@ -5,7 +5,7 @@
 
 class Node {
 public:
-    Node(std::string id, std::string name, double size):_id(id), _name(name), _size(size){}
+    Node(std::string id, std::string name, double size);
 
     std::string id() const;
 
@@ -26,11 +26,8 @@ public:
     virtual Iterator* createIterator() const;
 
     virtual ~Node(){};
-    std::string _path;
 private:
-    std::string _id, _name;
+    std::string _id, _name, _path;
     double _size=0.0;
-// protected:
-//     std::string _path;
 };
 #endif

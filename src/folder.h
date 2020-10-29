@@ -10,7 +10,6 @@ class Folder : public Node {
 public:
     Folder(std::string id, std::string name):Node::Node(id, name, 0.0) {} // the default size of folder is zero.
     
-    // implement any functions inherit from Node that you think is suitable.
     double size()const{
         double result=0.0;
         for(std::list<Node *>::const_iterator i = _nodes.begin(); i != _nodes.end(); ++i){
@@ -19,40 +18,9 @@ public:
         return result;
     }
 
-    std::string route() const{
-        return _path+"/"+name();
-    } // the "virtual" of this funtion is optional.
-
-    void updatePath(std::string path){
-        std::cout<<path<<std::endl;
-        if(_nodes.size()==0){
-            // std::cout<<"in if: "+this->name()<<std::endl;
-            _path = path+_path;
-        }
-        Iterator* itr = this->createIterator();
-        // if(itr->isDone()){
-        //     std::cout<<"in is done: "+itr->currentItem()->_path<<std::endl;
-        //     _path = path+_path;
-        // }
-        // std::cout<<"in update path: "+itr->currentItem()->name()<<std::endl;
-        for(itr->first(); !itr->isDone(); itr->next()){
-
-            Node* s = itr->currentItem();
-            //  std::cout<<"in for: "+itr->currentItem()->name()<<std::endl;
-            std::string n = s->name();
-            s->_path = path;
-            // Iterator* innerItr = s->createIterator();
-            // if(!innerItr->isDone()){
-            //     //!!
-            //     // std::cout<<"in innr: "+itr->currentItem()->name()<<std::endl;
-            //     updatePath(path);
-            // }
-        }
-    }
-
     void addNode(Node* node){
         _nodes.push_back(node);
-        updatePath(route());
+        node->updatePath(route());//whose route() favorite or chrome?
     }
 
     Node* getNodeById(std::string id) const{
@@ -100,6 +68,5 @@ public:
 
 private:
     std::list<Node*> _nodes;
-    // std::string _path;
 };
 #endif

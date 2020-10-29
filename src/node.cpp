@@ -1,13 +1,15 @@
 #include "node.h"
-#include <string>
 #include "iterator.h"
 #include "null_iterator.h"
 
-// Node::Node(std::string id, std::string name, double size){
-//     _id = id;
-//     _name = name;
-//     _size = size;
-// }
+#include <string>
+#include <iostream>
+
+Node::Node(std::string id, std::string name, double size){
+    _id = id;
+    _name = name;
+    _size = size;
+}
 
 std::string Node::id() const{
     return _id;
@@ -18,7 +20,7 @@ std::string Node::name() const{
 }
 
 std::string Node::route() const{
-    // return _path+"/"+_name;
+    return _path+"/"+_name;
 } // the "virtual" of this funtion is optional.
 
 double Node::size() const{
@@ -26,7 +28,9 @@ double Node::size() const{
 }
 
 void Node::updatePath(std::string path){
-    // _path = path;
+    std::cout<<"path: "+path<<std::endl;
+    _path = path;
+    std::cout<<"_path: "+_path<<std::endl;
 }
 
 void Node::addNode(Node* node){

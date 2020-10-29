@@ -112,17 +112,17 @@ TEST_F(FolderTestSuite, route_change_after_add_nodes){
     addNodes();
 
     EXPECT_EQ("/favorite", favorite->route());
-    // EXPECT_EQ("/favorite/chrome", chrome->route());
-    // EXPECT_EQ("/favorite/facebook", facebook->route());
-    // EXPECT_EQ("/favorite/common", common->route());
+    EXPECT_EQ("/favorite/chrome", chrome->route());
+    EXPECT_EQ("/favorite/facebook", facebook->route());
+    EXPECT_EQ("/favorite/common", common->route());
 
-    // EXPECT_EQ("/favorite/common/instagram", instagram->route());
-    // EXPECT_EQ("/favorite/common/youtube", youtube->route());
-    // EXPECT_EQ("/favorite/common/community", community->route());
+    EXPECT_EQ("/favorite/common/instagram", instagram->route());
+    EXPECT_EQ("/favorite/common/youtube", youtube->route());
+    EXPECT_EQ("/favorite/common/community", community->route());
 
-    // EXPECT_EQ("/favorite/common/community/ubereat", ubereat->route());
-    // EXPECT_EQ("/favorite/common/community/line", line->route());
-    // EXPECT_EQ("/favorite/common/community/trash", trash->route());
+    EXPECT_EQ("/favorite/common/community/ubereat", ubereat->route());
+    EXPECT_EQ("/favorite/common/community/line", line->route());
+    EXPECT_EQ("/favorite/common/community/trash", trash->route());
 }
 
 TEST_F(FolderTestSuite, get_node){

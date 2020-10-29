@@ -28,9 +28,7 @@ double Node::size() const{
 }
 
 void Node::updatePath(std::string path){
-    std::cout<<"path: "+path<<std::endl;
     _path = path;
-    std::cout<<"_path: "+_path<<std::endl;
 }
 
 void Node::addNode(Node* node){

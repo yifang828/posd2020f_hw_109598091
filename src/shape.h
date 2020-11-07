@@ -2,6 +2,8 @@
 #define SHAPE_H
 #include <string>
 #include "iterator.h"
+#include "visitor.h"
+
 class Shape{
     public:
         Shape(std::string id); 
@@ -12,6 +14,7 @@ class Shape{
         virtual double perimeter()const = 0;
         virtual std::string info() const = 0;
         virtual std::string type() const = 0;//hw5
+        virtual void accept(Visitor* visitor) = 0;
         virtual void addShape(Shape *shape); 
         virtual void deleteShapeById(std::string id); 
         virtual Shape* getShapeById(std::string id); 

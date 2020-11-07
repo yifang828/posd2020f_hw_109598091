@@ -58,11 +58,10 @@ public:
     return "Triangle";
   }
 
-private:
-  std::vector<TwoDimensionalCoordinate*> _vectors;
-  std::vector<double> _edges;
-  const std::string triangleErrMsg = "This is not a triangle!";
-
+  void accept(Visitor *v){
+      v->visit(this);
+  }
+  
   std::vector<double> getEdges(std::vector<TwoDimensionalCoordinate*> v) {
       std::vector<double> e;
       for(int i = 0; i < v.size()-1; i++){
@@ -74,6 +73,15 @@ private:
       }
       return e;
   }
+
+  std::vector<TwoDimensionalCoordinate*> getVectors(){
+    return _vectors;
+  }
+
+private:
+  std::vector<TwoDimensionalCoordinate*> _vectors;
+  std::vector<double> _edges;
+  const std::string triangleErrMsg = "This is not a triangle!";
 
   double calculateEdge(TwoDimensionalCoordinate* point1, TwoDimensionalCoordinate* point2) const{
       double x1 = point1 -> getX();

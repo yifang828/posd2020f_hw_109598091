@@ -46,6 +46,18 @@ public:
     return "Rectangle";
   }
 
+  void accept(Visitor *v){
+      v->visit(this);
+  }
+
+  double getLength() {
+    return _length;
+  }
+
+  double getWidth() {
+    return _width;
+  }
+  
 private:
     double _length, _width;
     const std::string rectangleErrorMsg = "This is not a rectangle!";

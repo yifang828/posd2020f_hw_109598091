@@ -45,6 +45,19 @@ public:
   std::string type() const{
     return "Ellipse";
   }
+
+  void accept(Visitor *v){
+        v->visit(this);
+  }
+
+  double getSemiMajorAxes(){
+    return _semiMajorAxes;
+  }
+
+  double getSemiMinorAxes(){
+    return _semiMinorAxes;
+  }
+  
 private:
   double _semiMajorAxes, _semiMinorAxes;
   const std::string ellipseErrorMsg = "This is not an ellipse!";

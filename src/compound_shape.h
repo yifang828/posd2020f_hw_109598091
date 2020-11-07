@@ -88,11 +88,20 @@ public:
         }
         throw(std::string)"Expected get shape but shape not found";
     }
+
     Iterator * createIterator() const {
         return new ShapeIterator<std::list<Shape*>::const_iterator>(_shape.begin(), _shape.end());
     }
 
-    std::list<Shape*> _shape;
+    void accept(Visitor *v){
+        v->visit(this);
+    }
+
+    std::list<Shape*> getShapes(){
+        return _shape;
+    }
+
 private:
+    std::list<Shape*> _shape;
 };
 #endif

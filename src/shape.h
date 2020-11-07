@@ -17,7 +17,7 @@ class Shape{
         virtual void accept(Visitor* visitor) = 0;
         virtual void addShape(Shape *shape); 
         virtual void deleteShapeById(std::string id); 
-        virtual Shape* getShapeById(std::string id); 
+        virtual Shape* getShapeById(std::string id) const; 
         virtual Iterator * createIterator() const;//hw5
         virtual ~Shape(){};
     private:

@@ -70,9 +70,9 @@ public:
         return "Compound Shape";
     }
     
-    Shape* getShapeById(std::string id) {
+    Shape* getShapeById(std::string id) const{
         Shape * result;
-        for(std::list<Shape *>::iterator i = _shape.begin(); i != _shape.end(); ++i){
+        for(std::list<Shape *>::const_iterator i = _shape.begin(); i != _shape.end(); ++i){
             try{
                 if((*i)->id()!=id){
                     result = (*i)->getShapeById(id);

@@ -54,8 +54,8 @@ public:
     void visit(CompoundShape* compoundShape) {
         std::string result;
         std::list<Shape*> _shapes = compoundShape->getShapes();
-        InfoVisitor * iVstr = new InfoVisitor();
         for(std::list<Shape *>::const_iterator i = _shapes.begin(); i != _shapes.end(); ++i){
+            InfoVisitor * iVstr = new InfoVisitor();
             (*i)->accept(iVstr);
             if(i==_shapes.begin()){
                 result += iVstr ->info();

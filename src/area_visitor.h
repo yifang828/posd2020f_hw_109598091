@@ -35,8 +35,8 @@ public:
 
     void visit(CompoundShape* compoundShape) {
         std::list<Shape*> _shapes = compoundShape->getShapes();
-        AreaVisitor * areaVstr = new AreaVisitor();
         for(std::list<Shape *>::const_iterator i = _shapes.begin(); i != _shapes.end(); ++i){
+            AreaVisitor * areaVstr = new AreaVisitor();
             (*i)->accept(areaVstr);
             _area += areaVstr->area();
         }

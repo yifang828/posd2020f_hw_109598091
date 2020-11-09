@@ -6,7 +6,7 @@
 #include "rectangle.h"
 #include "compound_shape.h"
 #include "two_dimensional_coordinate.h"
-#include "visitor.h"
+#include "info_visitor.h"
 #include <vector>
 #include <sstream>
 
@@ -54,11 +54,13 @@ public:
     void visit(CompoundShape* compoundShape) {
         std::string result;
         std::list<Shape*> _shapes = compoundShape->getShapes();
+        InfoVisitor * iVstr = new InfoVisitor();
         for(std::list<Shape *>::const_iterator i = _shapes.begin(); i != _shapes.end(); ++i){
+            (*i)->accept(iVstr);
             if(i==_shapes.begin()){
-                result += (*i) ->info();
+                result += iVstr ->info();
             }else{
-                result += ", "+ (*i)->info();
+                result += ", "+ iVstr->info();
             }
         }
         _info = "Compound Shape {" + result + "}";

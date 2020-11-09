@@ -5,7 +5,7 @@
 #include "rectangle.h"
 #include "compound_shape.h"
 #include "two_dimensional_coordinate.h"
-#include "visitor.h"
+#include "area_visitor.h"
 #include <vector>
 
 class AreaVisitor : public Visitor{
@@ -35,8 +35,10 @@ public:
 
     void visit(CompoundShape* compoundShape) {
         std::list<Shape*> _shapes = compoundShape->getShapes();
+        AreaVisitor * areaVstr = new AreaVisitor();
         for(std::list<Shape *>::const_iterator i = _shapes.begin(); i != _shapes.end(); ++i){
-            _area += (*i)->area();
+            (*i)->accept(areaVstr);
+            _area += areaVstr->area();
         }
     }
 

@@ -42,16 +42,6 @@ protected:
     Shape * outer;
 };
 
-TEST_F(CompoundShapeTest, NoShapeInCompoundShape){
-    std::list<Shape*> shapeV;
-    try{
-        CompoundShape cs("cs", shapeV);
-        FAIL();
-    }catch(std::string e){
-        ASSERT_EQ("This is not a compound shape!",e);
-    }
-}
-
 TEST_F(CompoundShapeTest, CompoundShapeDefault){
     ASSERT_EQ("transparent", inner->color());
 }

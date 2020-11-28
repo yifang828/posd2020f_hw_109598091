@@ -37,21 +37,21 @@ TEST(Scanner, rectangle) {
 }
 
 TEST(Scanner, triangle) {
-    Scanner scanner("Triangle (0, 0, 0, 3, 4, 0)");
+    Scanner scanner("Triangle (0.000, 0.000, 0.000, 3.000, 4.000, 0.000)");
 
     ASSERT_EQ("Triangle", scanner.nextToken());
     ASSERT_EQ("(", scanner.nextToken());
-    ASSERT_EQ("0", scanner.nextToken());
+    ASSERT_EQ("0.000", scanner.nextToken());
     ASSERT_EQ(",", scanner.nextToken());
-    ASSERT_EQ("0", scanner.nextToken());
+    ASSERT_EQ("0.000", scanner.nextToken());
     ASSERT_EQ(",", scanner.nextToken());
-    ASSERT_EQ("0", scanner.nextToken());
+    ASSERT_EQ("0.000", scanner.nextToken());
     ASSERT_EQ(",", scanner.nextToken());
-    ASSERT_EQ("3", scanner.nextToken());
+    ASSERT_EQ("3.000", scanner.nextToken());
     ASSERT_EQ(",", scanner.nextToken());
-    ASSERT_EQ("4", scanner.nextToken());
+    ASSERT_EQ("4.000", scanner.nextToken());
     ASSERT_EQ(",", scanner.nextToken());
-    ASSERT_EQ("0", scanner.nextToken());
+    ASSERT_EQ("0.000", scanner.nextToken());
     ASSERT_EQ(")", scanner.nextToken());
 
     try {

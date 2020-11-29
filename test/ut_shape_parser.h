@@ -66,5 +66,5 @@ TEST(ShapeParserTest, parser_compoundShape){
 
     ASSERT_EQ(1, results.size());
 
-    EXPECT_EQ("Compound Shape {Ellipse (4.000, 3.000), Rectangle (4.000, 3.000)}", results[0]->info());
+    EXPECT_EQ("Compound Shape {Rectangle (4.000, 3.000), Ellipse (4.000, 3.000)}", results[0]->info());
 }

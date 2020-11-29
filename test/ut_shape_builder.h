@@ -58,3 +58,16 @@ TEST(ShapeBuilder, build_forest){
     ASSERT_EQ(22, result[1]->area());
     ASSERT_NEAR(0.5, result[2]->area(), 0.001);
 }
+
+TEST(ShapeBuilder, build_compoundshape_with_empty_compoundshape){
+    ShapeBuilder sb;
+    sb.buildCompoundShapeBegin();
+    sb.buildCompoundShapeBegin();
+    sb.buildCompoundShapeEnd();
+    sb.buildCompoundShapeBegin();
+    sb.buildCompoundShapeEnd();
+    sb.buildCompoundShapeEnd();
+    std::deque<Shape*> result = sb.getResult();
+
+    ASSERT_EQ(1, result.size());
+}

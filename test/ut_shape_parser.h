@@ -68,3 +68,37 @@ TEST(ShapeParserTest, parser_compoundShape){
 
     EXPECT_EQ("Compound Shape {Rectangle (4.000, 3.000), Ellipse (4.000, 3.000)}", results[0]->info());
 }
+
+TEST(ShapeParserTest, parser_empty_compoundShape){
+    ShapeParser sp("CompoundShape {}");
+    sp.parser();
+
+    std::deque<Shape*> results = sp.getResult();
+
+    ASSERT_EQ(1, results.size());
+
+    EXPECT_EQ("Compound Shape {}", results[0]->info());
+}
+
+TEST(ShapeParserTest, parser_compoundShape_with_empty_compoundShape_and_simple_shapes){
+    ShapeParser sp("CompoundShape {Rectangle (4.000, 3.000), Ellipse (4.000, 3.000), CompoundShape {}}");
+    sp.parser();
+
+    std::deque<Shape*> results = sp.getResult();
+
+    ASSERT_EQ(1, results.size());
+
+    EXPECT_EQ("Compound Shape {Rectangle (4.000, 3.000), Ellipse (4.000, 3.000), Compound Shape {}}", results[0]->info());
+}
+
+TEST(ShapeParserTest, parser_compoundShape_with_simple_shapes_and_empty_compoundShape){
+    ShapeParser sp("CompoundShape {Rectangle (4.000, 3.000), Ellipse (4.000, 3.000)}, CompoundShape {}");
+    sp.parser();
+
+    std::deque<Shape*> results = sp.getResult();
+
+    ASSERT_EQ(2, results.size());
+
+    EXPECT_EQ("Compound Shape {Rectangle (4.000, 3.000), Ellipse (4.000, 3.000)}", results[0]->info());
+    EXPECT_EQ("Compound Shape {}", results[1]->info());
+}

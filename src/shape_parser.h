@@ -36,10 +36,13 @@ public:
                 if(values.size()==2){
                     sb->buildEllipse(values[0], values[1]);
                 }
-            }else if ("CompoundShape"){
+            }else if ("CompoundShape" == token){
                 sb->buildCompoundShapeBegin();
                 scanner->nextToken();
                 parser();
+            }
+            else if ("}" == token){
+                sb->buildCompoundShapeEnd();
             }
             try {
                 token = scanner->nextToken();

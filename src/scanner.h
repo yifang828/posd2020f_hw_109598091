@@ -8,7 +8,6 @@ class Scanner {
 public:
     Scanner(std::string input){
         _input = input;
-        std::cout<<input<<std::endl;
         std::string str = "";
 
         for(int i = 0; i<_input.length(); ++i){

@@ -45,17 +45,13 @@ public:
         if((dynamic_cast<CompoundShape*>(_pushdown.top()) && _pushdown.top()->createIterator()->isDone()\
             &&  _emptyCS.empty()) || (dynamic_cast<CompoundShape*>(_pushdown.top()) && _pushdown.top()->createIterator()->isDone()\
             &&  _emptyCS.top()->id() != _pushdown.top()->id())){
-            std::cout<<"1"<<std::endl;
             _emptyCS.push(_pushdown.top());
-            // _pushdown.pop();
             return;
         }
         while (!dynamic_cast<CompoundShape*>(_pushdown.top()) || (dynamic_cast<CompoundShape*>(_pushdown.top()) && \
             !_pushdown.top()->createIterator()->isDone()) || (!_emptyCS.empty() && _emptyCS.top()->id() == \
             _pushdown.top()->id())){
-            std::cout<<"2"<<std::endl;
             if(!_emptyCS.empty() &&  _emptyCS.top()->id() == _pushdown.top()->id()){
-                std::cout<<"3"<<std::endl;
                 deque.push_front(_emptyCS.top());
                 _emptyCS.pop();
                 _pushdown.pop();
@@ -65,7 +61,6 @@ public:
             _pushdown.pop();
         }
         for(std::deque<Shape*>::iterator itr = deque.begin(); itr != deque.end(); itr++){
-            std::cout<<"4"<<std::endl;
             _pushdown.top()->addShape(*itr);
         }
         

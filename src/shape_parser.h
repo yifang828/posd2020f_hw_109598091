@@ -15,8 +15,8 @@ public:
 
     void parser(){
         std::string token;
+        token = scanner->nextToken();
         do{
-            token = scanner->nextToken();
             if("Rectangle"==token){
                 std::vector<double>values = getValue();
                 if(values.size()==2){
@@ -34,24 +34,19 @@ public:
                 }
             }else if ("CompoundShape" == token){
                 sb->buildCompoundShapeBegin();
-                scanner->nextToken();
-                parser();
             }
             else if ("}" == token){
                 sb->buildCompoundShapeEnd();
             }
             try {
                 token = scanner->nextToken();
-                if("}" == token){
-                    sb->buildCompoundShapeEnd();
-                }
             }
             catch(const std::string e) {
                 if(e == "next char doesn't exist."){
                     return;
                 }
             }
-        } while ("," == token);
+        } while ("" != token);
     }
 
     std::deque<Shape*> getResult(){

@@ -38,31 +38,49 @@ public:
         std::list<Shape*> shapes;
         Shape * cs = new CompoundShape(std::to_string(_pushdown.size()), shapes);
         _pushdown.push(cs);
+        _state.push(false);
     }
 
     void buildCompoundShapeEnd(){
         std::deque<Shape*> deque;
-        if((dynamic_cast<CompoundShape*>(_pushdown.top()) && _pushdown.top()->createIterator()->isDone()\
-            &&  _emptyCS.empty()) || (dynamic_cast<CompoundShape*>(_pushdown.top()) && _pushdown.top()->createIterator()->isDone()\
-            &&  _emptyCS.top()->id() != _pushdown.top()->id())){
-            _emptyCS.push(_pushdown.top());
-            return;
-        }
+        // if((dynamic_cast<CompoundShape*>(_pushdown.top()) && _pushdown.top()->createIterator()->isDone()\
+        //     &&  _emptyCS.empty()) || (dynamic_cast<CompoundShape*>(_pushdown.top()) && _pushdown.top()->createIterator()->isDone()\
+        //     &&  _emptyCS.top()->id() != _pushdown.top()->id())){
+        //     _emptyCS.push(_pushdown.top());
+        //     return;
+        // }
+        // while (!dynamic_cast<CompoundShape*>(_pushdown.top()) || (dynamic_cast<CompoundShape*>(_pushdown.top()) && \
+        //     !_pushdown.top()->createIterator()->isDone()) || (!_emptyCS.empty() && _emptyCS.top()->id() == \
+        //     _pushdown.top()->id())){
+        //     if(!_emptyCS.empty() &&  _emptyCS.top()->id() == _pushdown.top()->id()){
+        //         deque.push_front(_emptyCS.top());
+        //         _emptyCS.pop();
+        //         _pushdown.pop();
+        //         continue;
+        //     }
+        //     deque.push_front(_pushdown.top());
+        //     _pushdown.pop();
+        // }
+        // for(std::deque<Shape*>::iterator itr = deque.begin(); itr != deque.end(); itr++){
+        //     _pushdown.top()->addShape(*itr);
+        // }
         while (!dynamic_cast<CompoundShape*>(_pushdown.top()) || (dynamic_cast<CompoundShape*>(_pushdown.top()) && \
-            !_pushdown.top()->createIterator()->isDone()) || (!_emptyCS.empty() && _emptyCS.top()->id() == \
-            _pushdown.top()->id())){
-            if(!_emptyCS.empty() &&  _emptyCS.top()->id() == _pushdown.top()->id()){
-                deque.push_front(_emptyCS.top());
-                _emptyCS.pop();
-                _pushdown.pop();
-                continue;
-            }
+            _state.top()==true)){
             deque.push_front(_pushdown.top());
             _pushdown.pop();
+            if(dynamic_cast<CompoundShape*>(_pushdown.top())&&_state.top()){
+                std::cout<<"1"<<std::endl;
+                _state.pop();
+            }
         }
+        // if(dynamic_cast<CompoundShape*>(_pushdown.top()) && _state.top()==false){
+        //     _state.top() = true;
+        // }
         for(std::deque<Shape*>::iterator itr = deque.begin(); itr != deque.end(); itr++){
             _pushdown.top()->addShape(*itr);
+            std::cout<<"2"<<std::endl;
         }
+        _state.top()=true;
         
     }
 
@@ -78,6 +96,7 @@ public:
 
 private:
     std::stack<Shape *> _pushdown;
-    std::stack<Shape *> _emptyCS;
+    // std::stack<Shape *> _emptyCS;
+    std::stack<bool> _state;
 };
 #endif

@@ -13,10 +13,7 @@ public:
     void visitApp(App* app) {
         // find app when app's name matches given name,
         // add app's route as result.
-        std::cout<<"app name: "<<app->name()<<" , target name: "<<_name<<std::endl;
         if(_name == app->name()){
-            std::cout<<"app name match"<<std::endl;
-            std::cout<<"app route=================="<<app->route()<<std::endl;
             if(getResult()!=""){
                 _result = app->route();
             }else{
@@ -26,15 +23,9 @@ public:
     }
     
     void visitFolder(Folder* folder) {
-        // find folder when folder's name matches given name,
-        // add folder's route as result.
-        // And find the tree structure bellow,
-        // add the other match result with `\n`.
-        std::cout<<"folder name: "<<folder->name()<<std::endl;
         std::list<Node*> _nodes = folder->getNodes();
         Iterator* itr = folder->createIterator();
         if( _name == folder->name()){
-            std::cout<<"1"<<std::endl;
             if(getResult()!=""){
                 _result += "\n"+folder->route();
             }else{
@@ -45,7 +36,6 @@ public:
             FindVisitor * findVstr = new FindVisitor(_name);
             (*i)->accept(findVstr);
             if(findVstr->getResult()!="" && _result!=""){
-                std::cout<<"get result: "<<findVstr->getResult()<<std::endl;
                 _result += "\n"+findVstr->getResult();
             }else if(findVstr->getResult()!="" && _result==""){
                 _result = findVstr->getResult();

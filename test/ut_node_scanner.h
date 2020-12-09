@@ -148,7 +148,7 @@ TEST(Scanner, next_token_exception) {
 
 //%2
 TEST(Scanner, folder_contain_folders_with_ignore_symbol) {
-    std::string input = "favorite !@#{$%community<>{?trash [{]}[]}, *common {+}+}";
+    std::string input = "favorite !@#{$%community <>{?trash [{]}[]}, *common {+}+}";
     NodeScanner* scn = new NodeScanner(input);
 
     ASSERT_EQ("favorite", scn->nextToken());

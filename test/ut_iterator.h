@@ -1,6 +1,8 @@
 #include "../src/folder.h"
 #include "../src/app.h"
 
+using namespace std;
+
 class IteratorTestSuite: public testing::Test {
 protected:
     virtual void SetUp() {
@@ -16,14 +18,15 @@ protected:
         community = new Folder("9", "community");
         trash = new Folder("10", "trash");
 
-        community->addNode(ubereat);
-        community->addNode(line);
-        community->addNode(trash);
-        
         common->addNode(instagram);
         common->addNode(community);
         common->addNode(youtube);
 
+
+        community->addNode(ubereat);
+        community->addNode(line);
+        community->addNode(trash);
+        
         favorite->addNode(chrome);
         favorite->addNode(facebook);
         favorite->addNode(common);
@@ -47,7 +50,7 @@ TEST_F(IteratorTestSuite, exception_for_app_iterate_first){
     try {
         it->first();
         FAIL();
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("No child member!", e);
     }
 }
@@ -57,7 +60,7 @@ TEST_F(IteratorTestSuite, exception_for_app_iterate_current_item){
     try {
         it->currentItem();
         FAIL();
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("No child member!", e);
     }
 }
@@ -67,7 +70,7 @@ TEST_F(IteratorTestSuite, exception_for_app_iterate_next){
     try {
         it->next();
         FAIL();
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("No child member!", e);
     }
 }
@@ -125,7 +128,7 @@ TEST_F(IteratorTestSuite, exception_for_folder_iterate_next_out_of_range) {
     try {
         it->next();
         FAIL();
-    }catch(std::string e) {
+    }catch(string e) {
         EXPECT_EQ("Moving past the end!", e);
     }
 }

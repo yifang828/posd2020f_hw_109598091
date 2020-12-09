@@ -36,6 +36,26 @@ public:
         }
     }
 
+    void addNodes(std::list<Node*> nodes){
+        for(std::list<Node*>::iterator i = nodes.begin(); i!=nodes.end(); ++i){
+            _nodes.push_back(*i);
+            (*i)->updatePath(route());
+            Iterator * nodeItr = (*i)->createIterator();
+            if(!nodeItr->isDone()){
+                std::string parent_route = (*i)->route();
+                for(nodeItr->first(); !nodeItr->isDone(); nodeItr->next()){
+                    Node * subNode = nodeItr->currentItem();
+                    subNode->updatePath(parent_route);
+                    Iterator * subItr = subNode->createIterator();
+                    while(!subItr->isDone()){
+                        subItr->currentItem()->updatePath(subNode->route());
+                        subItr->next();
+                    }
+                }
+            }
+        }
+    }
+
     Node* getNodeById(std::string id) const{
         Iterator * itr = createIterator();
         for(itr->first(); !itr->isDone(); itr->next()){
@@ -81,6 +101,14 @@ public:
 
     Iterator * createIterator() const {
         return new NodeIterator<std::list<Node*>::const_iterator>(_nodes.begin(), _nodes.end());
+    }
+
+    void accept(Visitor * visitor){
+        visitor->visitFolder(this);
+    }
+
+    std::list<Node*> getNodes() const {
+        return _nodes;
     }
 
 private:

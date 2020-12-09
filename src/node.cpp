@@ -4,6 +4,7 @@
 
 #include <string>
 #include <iostream>
+#include <list>
 
 Node::Node(std::string id, std::string name, double size){
     _id = id;
@@ -33,6 +34,10 @@ void Node::updatePath(std::string path){
 
 void Node::addNode(Node* node){
     throw (std::string) "only folder can add node.";
+}
+
+void Node::addNodes(std::list<Node*> nodes){
+    throw (std::string) "only folder can add nodes.";
 }
 
 Node* Node::getNodeById(std::string id) const{

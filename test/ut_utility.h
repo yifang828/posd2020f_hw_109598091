@@ -2,6 +2,8 @@
 #include "../src/app.h"
 #include "../src/utility.h"
 
+using namespace std;
+
 class UtlilityTestSuite: public testing::Test {
     protected:
     virtual void SetUp() {
@@ -49,64 +51,64 @@ TEST_F(UtlilityTestSuite, exception_for_app_filter_by_size) {
     try {
         filterNode(firefox, SizeFilter(100, 1));
         FAIL();
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("Only folder can filter node!", e);
     }
 }
 
 TEST_F(UtlilityTestSuite, folder_filter_by_size_between_80_and_50) {
-    std::deque<Node *> results = filterNode(favorite, SizeFilter(142.56, 74));
+    deque<Node *> nodes = filterNode(favorite, SizeFilter(142.56, 74));
 
-    ASSERT_EQ(3, results.size());
+    ASSERT_EQ(3, nodes.size());
     
-    EXPECT_EQ("3", results[0]->id());
-    EXPECT_DOUBLE_EQ(77.77, results[0]->size());
+    EXPECT_EQ("3", nodes[0]->id());
+    EXPECT_DOUBLE_EQ(77.77, nodes[0]->size());
 
-    EXPECT_EQ("9", results[1]->id());
-    EXPECT_DOUBLE_EQ(94.046, results[1]->size());
+    EXPECT_EQ("9", nodes[1]->id());
+    EXPECT_DOUBLE_EQ(94.046, nodes[1]->size());
 
-    EXPECT_EQ("6", results[2]->id());
-    EXPECT_DOUBLE_EQ(79.25, results[2]->size());
+    EXPECT_EQ("6", nodes[2]->id());
+    EXPECT_DOUBLE_EQ(79.25, nodes[2]->size());
 }
 
 TEST_F(UtlilityTestSuite, folder_filter_by_size_between_999_and_0) {
-    std::deque<Node *> results = filterNode(favorite, SizeFilter(999, 0));
+    deque<Node *> nodes = filterNode(favorite, SizeFilter(999, 0));
 
-    ASSERT_EQ(9, results.size());
+    ASSERT_EQ(9, nodes.size());
 
-    EXPECT_EQ("1", results[0]->id());
-    EXPECT_DOUBLE_EQ(62.38, results[0]->size());
+    EXPECT_EQ("1", nodes[0]->id());
+    EXPECT_DOUBLE_EQ(62.38, nodes[0]->size());
 
-    EXPECT_EQ("2", results[1]->id());
-    EXPECT_DOUBLE_EQ(1.16, results[1]->size());
+    EXPECT_EQ("2", nodes[1]->id());
+    EXPECT_DOUBLE_EQ(1.16, nodes[1]->size());
 
-    EXPECT_EQ("8", results[2]->id());
-    EXPECT_DOUBLE_EQ(667.136, results[2]->size());
+    EXPECT_EQ("8", nodes[2]->id());
+    EXPECT_DOUBLE_EQ(667.136, nodes[2]->size());
 
-    EXPECT_EQ("3", results[3]->id());
-    EXPECT_DOUBLE_EQ(77.77, results[3]->size());
+    EXPECT_EQ("3", nodes[3]->id());
+    EXPECT_DOUBLE_EQ(77.77, nodes[3]->size());
 
-    EXPECT_EQ("9", results[4]->id());
-    EXPECT_DOUBLE_EQ(94.046, results[4]->size());
+    EXPECT_EQ("9", nodes[4]->id());
+    EXPECT_DOUBLE_EQ(94.046, nodes[4]->size());
 
-    EXPECT_EQ("5", results[5]->id());
-    EXPECT_DOUBLE_EQ(14.796, results[5]->size());
+    EXPECT_EQ("5", nodes[5]->id());
+    EXPECT_DOUBLE_EQ(14.796, nodes[5]->size());
 
-    EXPECT_EQ("6", results[6]->id());
-    EXPECT_DOUBLE_EQ(79.25, results[6]->size());
+    EXPECT_EQ("6", nodes[6]->id());
+    EXPECT_DOUBLE_EQ(79.25, nodes[6]->size());
 
-    EXPECT_EQ("10", results[7]->id());
-    EXPECT_DOUBLE_EQ(0, results[7]->size());
+    EXPECT_EQ("10", nodes[7]->id());
+    EXPECT_DOUBLE_EQ(0, nodes[7]->size());
 
-    EXPECT_EQ("4", results[8]->id());
-    EXPECT_DOUBLE_EQ(495.32, results[8]->size());
+    EXPECT_EQ("4", nodes[8]->id());
+    EXPECT_DOUBLE_EQ(495.32, nodes[8]->size());
 }
 
 
 TEST_F(UtlilityTestSuite, folder_filter_by_size_equal_to_zero) {
-    std::deque<Node *> results = filterNode(favorite, SizeFilter(0, 0));
-    ASSERT_EQ(1, results.size());
+    deque<Node *> nodes = filterNode(favorite, SizeFilter(0, 0));
+    ASSERT_EQ(1, nodes.size());
 
-    EXPECT_EQ("10", results[0]->id());
-    EXPECT_EQ(0, results[0]->size());
+    EXPECT_EQ("10", nodes[0]->id());
+    EXPECT_EQ(0, nodes[0]->size());
 }

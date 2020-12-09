@@ -1,7 +1,9 @@
 #ifndef NODE_H
 #define NODE_H
 #include <string>
+#include <list>
 #include "iterator.h"
+#include "visitor.h"
 
 class Node {
 public:
@@ -24,6 +26,10 @@ public:
     virtual void deleteNodeById(std::string id);
 
     virtual Iterator* createIterator() const;
+
+    virtual void addNodes(std::list<Node*> nodes);
+
+    virtual void accept(Visitor* visitor) = 0;
 
     virtual ~Node(){};
 private:

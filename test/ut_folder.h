@@ -2,6 +2,8 @@
 #include "../src/folder.h"
 #include "../src/app.h"
 
+using namespace std;
+
 class FolderTestSuite: public testing::Test {
 protected:
     virtual void SetUp() {
@@ -147,14 +149,14 @@ TEST_F(FolderTestSuite, get_not_exist_node_should_throw_exception) {
     try {
         favorite->getNodeById("-1");
         FAIL();
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("Expected get node but node not found.", e);
     }
 
     try {
         community->getNodeById("8");
         FAIL();
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("Expected get node but node not found.", e);
     }
 }
@@ -163,6 +165,8 @@ TEST_F(FolderTestSuite, delete_node){
 
     addNodes();
 
+    ASSERT_DOUBLE_EQ(0, trash->size());
+    ASSERT_DOUBLE_EQ(101, community->size());
     ASSERT_DOUBLE_EQ(191.28, common->size());
     ASSERT_DOUBLE_EQ(271.75, favorite->size());
 
@@ -171,10 +175,12 @@ TEST_F(FolderTestSuite, delete_node){
     try {
         favorite->getNodeById("9");
         FAIL();
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("Expected get node but node not found.", e);
     }
 
+    EXPECT_DOUBLE_EQ(0, trash->size());
+    EXPECT_DOUBLE_EQ(101, community->size());
     EXPECT_DOUBLE_EQ(90.28, common->size());
     EXPECT_DOUBLE_EQ(170.75, favorite->size());
 
@@ -183,10 +189,12 @@ TEST_F(FolderTestSuite, delete_node){
     try {
         favorite->getNodeById("8");
         FAIL();
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("Expected get node but node not found.", e);
     }
 
+    EXPECT_DOUBLE_EQ(0, trash->size());
+    EXPECT_DOUBLE_EQ(101, community->size());
     EXPECT_DOUBLE_EQ(90.28, common->size());
     EXPECT_DOUBLE_EQ(80.47, favorite->size());
 }
@@ -196,14 +204,14 @@ TEST_F(FolderTestSuite, delete_not_exist_node_should_thorw_exception){
     try {
         favorite->deleteNodeById("-1");
         FAIL();
-    }catch(std::string s) {
+    }catch(string s) {
         ASSERT_EQ("Expected delete node but node not found.", s);
     }
 
     try {
         community->deleteNodeById("7");
         FAIL();
-    }catch(std::string s) {
+    }catch(string s) {
         ASSERT_EQ("Expected delete node but node not found.", s);
     }
 }

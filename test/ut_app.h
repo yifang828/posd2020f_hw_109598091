@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include "../src/app.h"
 
+using namespace std;
+
 class AppTestSuite: public testing::Test {
 protected:
     virtual void SetUp() {
@@ -52,7 +54,7 @@ TEST(AppTest, update_path) {
 TEST_F(AppTestSuite, add_node_should_throw_exception) {
     try {
         googleMap->addNode(gmail);
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("only folder can add node.", e);
     }
 }
@@ -60,7 +62,7 @@ TEST_F(AppTestSuite, add_node_should_throw_exception) {
 TEST_F(AppTestSuite, delete_node_should_throw_exception) {
     try {
         googleMap->deleteNodeById("2");
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("only folder can delete node.", e);
     }
 }
@@ -68,7 +70,7 @@ TEST_F(AppTestSuite, delete_node_should_throw_exception) {
 TEST_F(AppTestSuite, get_node_should_throw_exception) {
     try {
         googleMap->getNodeById("2");
-    }catch(std::string e) {
+    }catch(string e) {
         ASSERT_EQ("only folder can get node.", e);
     }
 }

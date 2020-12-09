@@ -5,7 +5,7 @@
 #include "ut_utility.h"
 #include "ut_visitor.h"
 #include "ut_node_scanner.h"
-// #include "ut_node_builder.h"
+#include "ut_node_builder.h"
 // #include "ut_node_parser.h"
 
 int main(int argc, char ** argv) {

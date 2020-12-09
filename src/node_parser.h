@@ -8,14 +8,34 @@ public:
     }
     
     void parser() {
-        // using NodeScanner::nextToken() to get all information to determine what to build,
-        // and provide the argument the node needed.
-        // use functions in NodeBuilder to build out the node.
-        // the node with invalid argument should be ignored.
+        std::string token;
+        token = scanner->nextToken();
+        do{
+            if(token!=""){
+                std::vector<double>values = getValue();
+                if(values.size()==2){
+                    nb->buildApp(values[0], values[1]);
+                }
+            }
+            // else if ("CompoundShape" == token){
+            //     nb->buildCompoundShapeBegin();
+            // }
+            // else if ("}" == token){
+            //     nb->buildCompoundShapeEnd();
+            // }
+            // try {
+            //     token = scanner->nextToken();
+            // }
+            // catch(const std::string e) {
+            //     if(e == "next token doesn't exist."){
+            //         return;
+            //     }
+            // }
+        } while ("" != token);
     }
     
     std::deque<Node*> getResult() {
-        // return result.
+        return nb->getResult();
     }
 private:
     NodeScanner * scanner;

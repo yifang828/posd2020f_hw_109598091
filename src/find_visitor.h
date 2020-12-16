@@ -19,7 +19,6 @@ public:
     }
     
     void visitFolder(Folder* folder) {
-        std::list<Node*> _nodes = folder->getNodes();
         Iterator* itr = folder->createIterator();
         if( _name == folder->name()){
             if(getResult()!=""){
@@ -28,9 +27,10 @@ public:
                 _result = folder->route();
             }
         }
-        for(std::list<Node *>::const_iterator i = _nodes.begin(); i != _nodes.end(); ++i){
+        for(itr->first(); !itr->isDone(); itr->next()){
             FindVisitor * findVstr = new FindVisitor(_name);
-            (*i)->accept(findVstr);
+            Node * s = itr->currentItem();
+            s->accept(findVstr);
             if(findVstr->getResult()!="" && _result!=""){
                 _result += "\n"+findVstr->getResult();
             }else if(findVstr->getResult()!="" && _result==""){

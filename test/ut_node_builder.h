@@ -270,95 +270,95 @@ TEST(NodeBuilderTest, build_multi_nodes_and_level_3_folder_contains_multi_app_an
     EXPECT_DOUBLE_EQ(112.357, results[3]->size());
     EXPECT_EQ("/googleMap", results[3]->route());
 }
-// //5%
-// TEST(NodeBuilderTest, build_multi_nodes_and_level_4_folder_contains_multi_app_and_empty_folder) {
-//     NodeBuilder nb;
+//5%
+TEST(NodeBuilderTest, build_multi_nodes_and_level_4_folder_contains_multi_app_and_empty_folder) {
+    NodeBuilder nb;
 
-//     nb.buildFolderBegin("trash");
-//     nb.buildFolderEnd();
+    nb.buildFolderBegin("trash");
+    nb.buildFolderEnd();
 
-//     nb.buildApp("gmail", 35.7);
-//     nb.buildApp("gmail", 35.7);
+    nb.buildApp("gmail", 35.7);
+    nb.buildApp("gmail", 35.7);
 
-//     nb.buildFolderBegin("favorite");
-//         nb.buildApp("chrome", 50.15);
-//         nb.buildApp("facebook", 30.32);
-//         nb.buildFolderBegin("common");
-//             nb.buildApp("instagram", 20.21);
-//             nb.buildFolderBegin("community");
-//                 nb.buildApp("ubereat", 40.34);
-//                 nb.buildApp("line", 60.66);
-//                 nb.buildFolderBegin("trash");
-//                 nb.buildFolderEnd();
-//             nb.buildFolderEnd();
-//             nb.buildApp("youtube", 70.07);
-//         nb.buildFolderEnd();
-//     nb.buildFolderEnd();
+    nb.buildFolderBegin("favorite");
+        nb.buildApp("chrome", 50.15);
+        nb.buildApp("facebook", 30.32);
+        nb.buildFolderBegin("common");
+            nb.buildApp("instagram", 20.21);
+            nb.buildFolderBegin("community");
+                nb.buildApp("ubereat", 40.34);
+                nb.buildApp("line", 60.66);
+                nb.buildFolderBegin("trash");
+                nb.buildFolderEnd();
+            nb.buildFolderEnd();
+            nb.buildApp("youtube", 70.07);
+        nb.buildFolderEnd();
+    nb.buildFolderEnd();
 
-//     nb.buildFolderBegin("trash");
-//     nb.buildFolderEnd();
+    nb.buildFolderBegin("trash");
+    nb.buildFolderEnd();
 
-//     std::deque<Node*> results = nb.getResult();
+    std::deque<Node*> results = nb.getResult();
+    
+    ASSERT_EQ(5, results.size());
 
-//     ASSERT_EQ(5, results.size());
+    EXPECT_NE(results[0]->id(), results[1]->id());
+    EXPECT_NE(results[1]->id(), results[2]->id());
+    EXPECT_NE(results[2]->id(), results[3]->id());
+    EXPECT_NE(results[3]->id(), results[4]->id());
+    EXPECT_NE(results[4]->id(), results[0]->id());
 
-//     EXPECT_NE(results[0]->id(), results[1]->id());
-//     EXPECT_NE(results[1]->id(), results[2]->id());
-//     EXPECT_NE(results[2]->id(), results[3]->id());
-//     EXPECT_NE(results[3]->id(), results[4]->id());
-//     EXPECT_NE(results[4]->id(), results[0]->id());
+    EXPECT_DOUBLE_EQ(0.0, results[0]->size());
+    EXPECT_EQ("/trash", results[0]->route());
 
-//     EXPECT_DOUBLE_EQ(0.0, results[0]->size());
-//     EXPECT_EQ("/trash", results[0]->route());
+    EXPECT_DOUBLE_EQ(35.7, results[1]->size());
+    EXPECT_EQ("/gmail", results[1]->route());
 
-//     EXPECT_DOUBLE_EQ(35.7, results[1]->size());
-//     EXPECT_EQ("/gmail", results[1]->route());
+    EXPECT_DOUBLE_EQ(35.7, results[2]->size());
+    EXPECT_EQ("/gmail", results[2]->route());
 
-//     EXPECT_DOUBLE_EQ(35.7, results[2]->size());
-//     EXPECT_EQ("/gmail", results[2]->route());
+    EXPECT_DOUBLE_EQ(271.75, results[3]->size());
+    EXPECT_EQ("/favorite", results[3]->route());
 
-//     EXPECT_DOUBLE_EQ(271.75, results[3]->size());
-//     EXPECT_EQ("/favorite", results[3]->route());
+    std::vector<Node*> favorite_childern = getChildren(results[3]);
 
-//     std::vector<Node*> favorite_childern = getChildren(results[3]);
+    ASSERT_EQ(3, favorite_childern.size());
 
-//     ASSERT_EQ(3, favorite_childern.size());
+    EXPECT_DOUBLE_EQ(50.15, favorite_childern[0]->size());
+    EXPECT_EQ("/favorite/chrome", favorite_childern[0]->route());
 
-//     EXPECT_DOUBLE_EQ(50.15, favorite_childern[0]->size());
-//     EXPECT_EQ("/favorite/chrome", favorite_childern[0]->route());
+    EXPECT_DOUBLE_EQ(30.32, favorite_childern[1]->size());
+    EXPECT_EQ("/favorite/facebook", favorite_childern[1]->route());
 
-//     EXPECT_DOUBLE_EQ(30.32, favorite_childern[1]->size());
-//     EXPECT_EQ("/favorite/facebook", favorite_childern[1]->route());
+    EXPECT_DOUBLE_EQ(191.28, favorite_childern[2]->size());
+    EXPECT_EQ("/favorite/common", favorite_childern[2]->route());
 
-//     EXPECT_DOUBLE_EQ(191.28, favorite_childern[2]->size());
-//     EXPECT_EQ("/favorite/common", favorite_childern[2]->route());
+    std::vector<Node*> common_childern = getChildren(favorite_childern[2]);
 
-//     std::vector<Node*> common_childern = getChildren(favorite_childern[2]);
+    ASSERT_EQ(3, common_childern.size());
 
-//     ASSERT_EQ(3, common_childern.size());
+    EXPECT_DOUBLE_EQ(20.21, common_childern[0]->size());
+    EXPECT_EQ("/favorite/common/instagram", common_childern[0]->route());
 
-//     EXPECT_DOUBLE_EQ(20.21, common_childern[0]->size());
-//     EXPECT_EQ("/favorite/common/instagram", common_childern[0]->route());
+    EXPECT_DOUBLE_EQ(101.0, common_childern[1]->size());
+    EXPECT_EQ("/favorite/common/community", common_childern[1]->route());
 
-//     EXPECT_DOUBLE_EQ(101.0, common_childern[1]->size());
-//     EXPECT_EQ("/favorite/common/community", common_childern[1]->route());
+    EXPECT_DOUBLE_EQ(70.07, common_childern[2]->size());
+    EXPECT_EQ("/favorite/common/youtube", common_childern[2]->route());
 
-//     EXPECT_DOUBLE_EQ(70.07, common_childern[2]->size());
-//     EXPECT_EQ("/favorite/common/youtube", common_childern[2]->route());
+    std::vector<Node*> community_childern = getChildren(common_childern[1]);
 
-//     std::vector<Node*> community_childern = getChildren(common_childern[1]);
+    ASSERT_EQ(3, community_childern.size());
 
-//     ASSERT_EQ(3, community_childern.size());
+    EXPECT_DOUBLE_EQ(40.34, community_childern[0]->size());
+    EXPECT_EQ("/favorite/common/community/ubereat", community_childern[0]->route());
 
-//     EXPECT_DOUBLE_EQ(40.34, community_childern[0]->size());
-//     EXPECT_EQ("/favorite/common/community/ubereat", community_childern[0]->route());
+    EXPECT_DOUBLE_EQ(60.66, community_childern[1]->size());
+    EXPECT_EQ("/favorite/common/community/line", community_childern[1]->route());
 
-//     EXPECT_DOUBLE_EQ(60.66, community_childern[1]->size());
-//     EXPECT_EQ("/favorite/common/community/line", community_childern[1]->route());
+    EXPECT_DOUBLE_EQ(0, community_childern[2]->size());
+    EXPECT_EQ("/favorite/common/community/trash", community_childern[2]->route());
 
-//     EXPECT_DOUBLE_EQ(0, community_childern[2]->size());
-//     EXPECT_EQ("/favorite/common/community/trash", community_childern[2]->route());
-
-//     EXPECT_DOUBLE_EQ(0.0, results[4]->size());
-//     EXPECT_EQ("/trash", results[4]->route());
-// }
+    EXPECT_DOUBLE_EQ(0.0, results[4]->size());
+    EXPECT_EQ("/trash", results[4]->route());
+}

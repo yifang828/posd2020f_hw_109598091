@@ -17,7 +17,6 @@ public:
     
     void buildFolderBegin(std::string name) {
         // notify begin of folder.
-        std::list<Node*> shapes;
         Node * n = new Folder(std::to_string(_pushdown.size()), name);
         _pushdown.push(n);
         _state.push(false);
@@ -30,10 +29,10 @@ public:
         while (!dynamic_cast<Folder*>(_pushdown.top()) || (dynamic_cast<Folder*>(_pushdown.top()) && \
             _state.top())){
             deque.push_front(_pushdown.top());
-            _pushdown.pop();
             if(dynamic_cast<Folder*>(_pushdown.top())&&_state.top()){
                 _state.pop();
             }
+            _pushdown.pop();
         }
         for(std::deque<Node*>::iterator itr = deque.begin(); itr != deque.end(); itr++){
             _pushdown.top()->addNode(*itr);

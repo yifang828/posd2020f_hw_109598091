@@ -11,26 +11,25 @@ public:
         _input = input;
         std::string str = "";
         std::cout<<_input<<std::endl;
-        // std::regex validChar("[A-Za-z0-9]");
+        std::regex validChar("[A-Za-z0-9\\.\\(\\)\\,\\{\\}]");
+        std::regex validToken("[\\(\\)\\,\\{\\}]");
+        std::smatch sm;
 
         for(int i = 0; i<_input.length(); ++i){
             char now = _input.at(i);
-            // std::cout<<"now: "<<now<<std::endl;
-            if(' ' == now||'!'==now||'@'==now||'#'==now||'$'==now||'%'==now||'^'==now||'&'==now||\
-                '*'==now||'+'==now||'_'==now||'?'==now||'~'==now||'<'==now||'>'==now||'/'==now||\
-                '-'==now||'='==now||'['==now||']'==now||'|'==now){
+            std::string s = std::string(1, now);
+            if(!std::regex_search(s, sm, validChar)){
                 continue;
-            }else if('(' == now || ')' == now || ',' == now\
-                || '{' == now || '}' ==  now){
+            }else if(std::regex_search(s, sm, validToken)){
                 if(!str.empty()){
                     _resultVector.push_back(str);
                     str.clear();
                 }
-                str.push_back(now);
+                str+=s;
                 _resultVector.push_back(str);
                 str.clear();
             }else {
-                str+=now;
+                str+=s;
             }
         }
     }
@@ -43,6 +42,9 @@ public:
         }else{
             throw (std::string)"next token doesn't exist.";
         }
+    }
+    bool isDone(){
+        return _resultVector.empty();
     }
 
 private:

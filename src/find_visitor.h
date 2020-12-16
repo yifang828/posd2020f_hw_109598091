@@ -14,11 +14,7 @@ public:
         // find app when app's name matches given name,
         // add app's route as result.
         if(_name == app->name()){
-            if(getResult()!=""){
-                _result = app->route();
-            }else{
-                _result = app->route();
-            }
+            _result = app->route();
         }
     }
     
